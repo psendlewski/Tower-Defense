@@ -1,8 +1,11 @@
+//
+// ================================ VARIABLES====================================
+
 // Define canvas and context
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Define the buttons
+// Define the Buttons
 const upgradeDamageButton = document.getElementById("upgradeDamage");
 const upgradeAttackSpeedButton = document.getElementById("upgradeAttackSpeed");
 const upgradeHealthButton = document.getElementById("upgradeHealth");
@@ -11,42 +14,26 @@ const upgradeHealthRegenButton = document.getElementById("upgradeHealthRegen");
 // Define the "Start New Game" button
 const startNewGameButton = document.getElementById("startNewGame");
 
+// Game over flag
+let gameOver = false;
+
 // Game variables
 let coins = 100;
+
 let wave = 0;
 let enemies = [];
 let tower = {
   x: canvas.width / 2,
   y: canvas.height / 2.7,
-  radius: 25,
+  radius: 13,
   sides: 8,
-  health: 100,
+  health: 10,
   attack: 100,
   attackSpeed: 1,
   range: 50,
-  shootingCooldown: 30, // Define shooting cooldown
+  shootingCooldown: 60, // Define shooting cooldown
   currentCooldown: 0, // Initialize current cooldown
 };
-
-// Enemy properties
-const enemySize = 10;
-const enemySpeed = 2;
-let enemyHealth = 10;
-
-// Function to create a new enemy
-function createEnemy(x, y, health) {
-  console.log("createEnemy");
-  return {
-    x: x,
-    y: y,
-    health: health,
-  };
-}
-
-// Define projectile object
-let projectiles = [];
-const projectileSpeed = 5;
-const projectileSize = 2;
 
 // Tower upgrade costs
 let upgradeDamageCost = 5;
@@ -54,8 +41,17 @@ let upgradeAttackSpeedCost = 5;
 let upgradeHealthCost = 5;
 let upgradeHealthRegenCost = 5;
 
-// Game over flag
-let gameOver = false;
+// Enemy properties
+const enemySize = 7;
+const enemySpeed = 2;
+let enemyHealth = 10;
+
+// Define projectile object
+let projectiles = [];
+const projectileSpeed = 5;
+const projectileSize = 2;
+
+// ================================ GAME LOGIC ====================================
 
 // Update the game loop
 function gameLoop() {
@@ -66,9 +62,10 @@ function gameLoop() {
     }
     updateTower();
     updateEnemies();
-    updateProjectiles(); // Add this
+    updateProjectiles();
+    drawTowerRange(); // Add this line to draw tower range
     drawEnemies();
-    drawProjectiles(); // Add this
+    drawProjectiles();
     displayInfo();
   } else {
     ctx.fillStyle = "red";
@@ -77,6 +74,82 @@ function gameLoop() {
     startNewGameButton.style.display = "block";
   }
   requestAnimationFrame(gameLoop);
+}
+
+// Calculate the distance between two points
+function distance(point1, point2) {
+  const dx = point1.x - point2.x;
+  const dy = point1.y - point2.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+// Display game information
+function displayInfo() {
+  ctx.fillStyle = "white";
+  ctx.font = "15px Arial";
+  ctx.fillText(`${wave}`, 290, 530);
+  ctx.fillText(`Coins: ${coins}`, 10, 190);
+  ctx.fillText(`${Math.floor(tower.health)}`, 90, 530);
+  ctx.fillText(`Upgrade Damage: ${upgradeDamageCost} coins`, 10, 215);
+  ctx.fillText(
+    `Upgrade Attack Speed: ${upgradeAttackSpeedCost} coins`,
+    10,
+    240
+  );
+  ctx.fillText(`Upgrade Health: ${upgradeHealthCost} coins`, 10, 265);
+  ctx.fillText(
+    `Upgrade Health Regen: ${upgradeHealthRegenCost} coins`,
+    10,
+    290
+  );
+}
+// ================================ TOWER ====================================
+
+// Draw tower range
+function drawTowerRange() {
+  ctx.strokeStyle = "blue";
+  ctx.beginPath();
+  ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
+  ctx.stroke();
+}
+
+// Update the tower's properties
+function updateTower() {
+  if (tower.health <= 0) {
+    gameOver = true;
+  }
+  tower.currentCooldown--;
+
+  // Check for enemy presence and attack
+  for (let i = 0; i < enemies.length; i++) {
+    const enemy = enemies[i];
+    const distanceToEnemy = distance(tower, enemy);
+
+    if (distanceToEnemy <= tower.radius + 5) {
+      // Enemy is in contact with the tower, reduce tower's health
+      tower.health -= 0.1;
+    } else if (
+      distanceToEnemy <= tower.range &&
+      tower.currentCooldown <= 0 &&
+      enemy.alive
+    ) {
+      // Enemy is within tower's range, cooldown is expired, and enemy is alive, shoot it
+      shootProjectile(enemy);
+      tower.currentCooldown = tower.shootingCooldown; // Reset cooldown
+    }
+  }
+}
+// ================================ ENEMIES ====================================
+
+// Function to create a new enemy
+function createEnemy(x, y, health) {
+  console.log("createEnemy");
+  return {
+    x: x,
+    y: y,
+    health: health,
+    alive: true, // Add 'alive' flag, initially set to true
+  };
 }
 
 // Spawn a new wave of enemies
@@ -100,114 +173,10 @@ function spawnWave() {
     }
 
     enemies.push(createEnemy(x, y, enemyHealth)); // Create enemy object using createEnemy function
-    console.log("spawnWave");
   }
 
   wave++;
   enemyHealth += 1;
-}
-
-/* =======================*/
-// Function to shoot a projectile
-function shootProjectile(targetEnemy) {
-  console.log("shootProjectile-check");
-  const dx = targetEnemy.x - tower.x;
-  const dy = targetEnemy.y - tower.y;
-  const angle = Math.atan2(dy, dx);
-  const velocity = {
-    x: Math.cos(angle) * projectileSpeed,
-    y: Math.sin(angle) * projectileSpeed,
-  };
-  projectiles.push({ x: tower.x, y: tower.y, velocity, damage: tower.attack });
-  console.log("shootProjectile");
-}
-
-// Update projectiles' positions and check collisions
-function updateProjectiles() {
-  for (let i = 0; i < projectiles.length; i++) {
-    const projectile = projectiles[i];
-    projectile.x += projectile.velocity.x;
-    projectile.y += projectile.velocity.y;
-    console.log("updateProjectiles1");
-
-    // Check for collisions with enemies
-    for (let j = 0; j < enemies.length; j++) {
-      const enemy = enemies[j];
-      const distanceToEnemy = distance(projectile, enemy);
-      if (distanceToEnemy < enemySize / 2) {
-        // Enemy hit, reduce its health
-        enemy.health -= projectile.damage;
-        // Remove projectile
-        projectiles.splice(i, 1);
-        // If enemy health drops to 0 or below, remove it
-        if (enemy.health <= 0) {
-          enemies.splice(j, 1);
-          coins += 10; // Reward for killing an enemy
-        }
-        console.log("updateProjectiles2");
-        return; // No need to check other enemies
-      }
-    }
-
-    // Remove projectiles that are out of bounds
-    if (
-      projectile.x < 0 ||
-      projectile.x > canvas.width ||
-      projectile.y < 0 ||
-      projectile.y > canvas.height
-    ) {
-      projectiles.splice(i, 1);
-      i--; // Adjust index after removing projectile
-    }
-  }
-}
-
-// Function to shoot an enemy
-function shootEnemy(enemyIndex) {
-  console.log("shootEnemy-check");
-  const enemy = enemies[enemyIndex];
-  enemy.health -= tower.attack; // Reduce enemy's health based on tower's attack
-  if (enemy.health <= 0) {
-    // If enemy's health drops to 0 or below, remove it from the array
-    enemies.splice(enemyIndex, 1);
-    // You can also increase the player's coins or score here
-    coins += 10; // Example: Gain 10 coins for killing an enemy
-  }
-}
-
-// Update the tower's properties
-function updateTower() {
-  if (tower.health <= 0) {
-    gameOver = true;
-  }
-  tower.currentCooldown--;
-  console.log(tower.currentCooldown);
-  // Check for enemy presence and attack
-  for (let i = 0; i < enemies.length; i++) {
-    const enemy = enemies[i];
-    const distanceToEnemy = distance(tower, enemy);
-    //  console.log(distanceToEnemy) = 30;
-    if (distanceToEnemy <= tower.radius + 5) {
-      // Enemy is in contact with the tower, reduce tower's health
-      tower.health -= 0.1;
-      shootProjectile(enemy);
-    } else if (distanceToEnemy <= tower.range && tower.currentCooldown <= 0) {
-      // Enemy is within tower's range and cooldown is expired, shoot it
-      shootProjectile(enemy);
-      tower.currentCooldown = tower.shootingCooldown; // Reset cooldown
-    }
-  }
-}
-
-// Draw projectiles
-function drawProjectiles() {
-  ctx.fillStyle = "red";
-  for (const projectile of projectiles) {
-    ctx.beginPath();
-    ctx.arc(projectile.x, projectile.y, projectileSize, 0, Math.PI * 2);
-    ctx.fill();
-    console.log("Draw Projectiles");
-  }
 }
 
 // Update the enemies' positions and health
@@ -247,36 +216,82 @@ function drawEnemies() {
   }
 }
 
-// Calculate the distance between two points
-function distance(point1, point2) {
-  const dx = point1.x - point2.x;
-  const dy = point1.y - point2.y;
-  return Math.sqrt(dx * dx + dy * dy);
+// ================================= PROJECTILES ====================================
+
+/* =======================*/
+// Function to shoot a projectile
+function shootProjectile(targetEnemy) {
+  const dx = targetEnemy.x - tower.x;
+  const dy = targetEnemy.y - tower.y;
+  const angle = Math.atan2(dy, dx);
+  const velocity = {
+    x: Math.cos(angle) * projectileSpeed,
+    y: Math.sin(angle) * projectileSpeed,
+  };
+  projectiles.push({
+    x: tower.x,
+    y: tower.y,
+    velocity,
+    damage: tower.attack,
+    target: targetEnemy,
+  }); // Include target enemy in the projectile
 }
 
-// Display game information
-function displayInfo() {
-  ctx.fillStyle = "white";
-  ctx.font = "15px Arial";
-  ctx.fillText(`${wave}`, 290, 530);
-  ctx.fillText(`Coins: ${coins}`, 10, 190);
-  ctx.fillText(`${Math.floor(tower.health)}`, 90, 530);
-  ctx.fillText(`Upgrade Damage: ${upgradeDamageCost} coins`, 10, 215);
-  ctx.fillText(
-    `Upgrade Attack Speed: ${upgradeAttackSpeedCost} coins`,
-    10,
-    240
-  );
-  ctx.fillText(`Upgrade Health: ${upgradeHealthCost} coins`, 10, 265);
-  ctx.fillText(
-    `Upgrade Health Regen: ${upgradeHealthRegenCost} coins`,
-    10,
-    290
-  );
+// Draw projectiles
+function drawProjectiles() {
+  ctx.fillStyle = "red";
+  for (const projectile of projectiles) {
+    ctx.beginPath();
+    ctx.arc(projectile.x, projectile.y, projectileSize, 0, Math.PI * 2);
+    ctx.fill();
+    console.log("Draw Projectiles");
+  }
 }
+
+// Update projectiles' positions and check collisions
+function updateProjectiles() {
+  for (let i = 0; i < projectiles.length; i++) {
+    const projectile = projectiles[i];
+    projectile.x += projectile.velocity.x;
+    projectile.y += projectile.velocity.y;
+
+    // Check for collisions with enemies
+    for (let j = 0; j < enemies.length; j++) {
+      const enemy = enemies[j];
+      const distanceToEnemy = distance(projectile, enemy);
+      if (
+        distanceToEnemy < enemySize / 2 &&
+        enemy === projectile.target &&
+        enemy.alive
+      ) {
+        // Enemy hit, reduce its health
+        enemy.health -= projectile.damage;
+        if (enemy.health <= 0) {
+          enemy.alive = false; // Set enemy to dead
+          enemies.splice(j, 1);
+          coins += 10; // Reward for killing an enemy
+        }
+        projectiles.splice(i, 1);
+        return; // No need to check other enemies
+      }
+    }
+
+    // Remove projectiles that are out of bounds
+    if (
+      projectile.x < 0 ||
+      projectile.x > canvas.width ||
+      projectile.y < 0 ||
+      projectile.y > canvas.height
+    ) {
+      projectiles.splice(i, 1);
+      i--; // Adjust index after removing projectile
+    }
+  }
+}
+
+// ================================ BUTTONS ====================================
 
 // Handle mouse click for upgrading tower
-
 upgradeDamageButton.addEventListener("click", () => {
   if (coins >= upgradeDamageCost) {
     tower.attack += 5;
@@ -310,7 +325,6 @@ upgradeHealthRegenButton.addEventListener("click", () => {
 });
 
 // Handle "Start New Game" button click
-/*
 startNewGameButton.addEventListener("click", () => {
   startNewGame();
 });
@@ -319,12 +333,15 @@ startNewGameButton.addEventListener("click", () => {
 function startNewGame() {
   tower = {
     x: canvas.width / 2,
-    y: canvas.height / 2,
-    radius: 30,
+    y: canvas.height / 2.7,
+    radius: 13,
     sides: 8,
-    health: 100,
-    attack: 10,
+    health: 10,
+    attack: 100,
     attackSpeed: 1,
+    range: 50,
+    shootingCooldown: 60, // Define shooting cooldown
+    currentCooldown: 0, // Initialize current cooldown
   };
   coins = 100;
   wave = 1;
@@ -336,6 +353,6 @@ function startNewGame() {
   gameOver = false;
   startNewGameButton.style.display = "none";
 }
-*/
+
 // Start the game loop
 gameLoop();
