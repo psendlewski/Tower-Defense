@@ -38,7 +38,7 @@ body {
 }
 #tower {
   position: absolute;
-  top: 30%;
+  top: 30.2%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.1);
 }
@@ -91,6 +91,7 @@ body {
   height: 30px;
   background-color: rgb(38, 65, 65);
   cursor: pointer;
+  border-radius: 5px;
 }
 #startNewGame {
   background-color: rgb(38, 65, 65);

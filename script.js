@@ -27,11 +27,12 @@ let tower = {
   y: canvas.height / 2.7,
   radius: 13,
   sides: 8,
-  health: 10,
-  attack: 100,
+  attack: 10,
   attackSpeed: 1,
+  health: 100,
+  healthregen: 0,
   range: 50,
-  shootingCooldown: 60, // Define shooting cooldown
+  shootingCooldown: 50, // Define shooting cooldown
   currentCooldown: 0, // Initialize current cooldown
 };
 
@@ -128,6 +129,10 @@ function updateTower() {
     if (distanceToEnemy <= tower.radius + 5) {
       // Enemy is in contact with the tower, reduce tower's health
       tower.health -= 0.1;
+      if (enemy.alive && tower.currentCooldown <= 0) {
+        shootProjectile(enemy);
+        tower.currentCooldown = tower.shootingCooldown;
+      } // Reset cooldown
     } else if (
       distanceToEnemy <= tower.range &&
       tower.currentCooldown <= 0 &&
@@ -139,6 +144,79 @@ function updateTower() {
     }
   }
 }
+// ================================= PROJECTILES ====================================
+
+/* =======================*/
+// Function to shoot a projectile
+function shootProjectile(targetEnemy) {
+  const dx = targetEnemy.x - tower.x;
+  const dy = targetEnemy.y - tower.y;
+  const angle = Math.atan2(dy, dx);
+  const velocity = {
+    x: Math.cos(angle) * projectileSpeed,
+    y: Math.sin(angle) * projectileSpeed,
+  };
+  projectiles.push({
+    x: tower.x,
+    y: tower.y,
+    velocity,
+    damage: tower.attack,
+    target: targetEnemy,
+  }); // Include target enemy in the projectile
+}
+
+// Draw projectiles
+function drawProjectiles() {
+  ctx.fillStyle = "red";
+  for (const projectile of projectiles) {
+    ctx.beginPath();
+    ctx.arc(projectile.x, projectile.y, projectileSize, 0, Math.PI * 2);
+    ctx.fill();
+    console.log("Draw Projectiles");
+  }
+}
+
+// Update projectiles' positions and check collisions
+function updateProjectiles() {
+  for (let i = 0; i < projectiles.length; i++) {
+    const projectile = projectiles[i];
+    projectile.x += projectile.velocity.x;
+    projectile.y += projectile.velocity.y;
+
+    // Check for collisions with enemies
+    for (let j = 0; j < enemies.length; j++) {
+      const enemy = enemies[j];
+      const distanceToEnemy = distance(projectile, enemy);
+      if (
+        distanceToEnemy < enemySize / 2 &&
+        enemy === projectile.target &&
+        enemy.alive
+      ) {
+        // Enemy hit, reduce its health
+        enemy.health -= projectile.damage;
+        if (enemy.health <= 0) {
+          enemy.alive = false; // Set enemy to dead
+          enemies.splice(j, 1);
+          coins += 10; // Reward for killing an enemy
+        }
+        projectiles.splice(i, 1);
+        return; // No need to check other enemies
+      }
+    }
+
+    // Remove projectiles that are out of bounds
+    if (
+      projectile.x < 0 ||
+      projectile.x > canvas.width ||
+      projectile.y < 0 ||
+      projectile.y > canvas.height
+    ) {
+      projectiles.splice(i, 1);
+      i--; // Adjust index after removing projectile
+    }
+  }
+}
+
 // ================================ ENEMIES ====================================
 
 // Function to create a new enemy
@@ -216,79 +294,6 @@ function drawEnemies() {
   }
 }
 
-// ================================= PROJECTILES ====================================
-
-/* =======================*/
-// Function to shoot a projectile
-function shootProjectile(targetEnemy) {
-  const dx = targetEnemy.x - tower.x;
-  const dy = targetEnemy.y - tower.y;
-  const angle = Math.atan2(dy, dx);
-  const velocity = {
-    x: Math.cos(angle) * projectileSpeed,
-    y: Math.sin(angle) * projectileSpeed,
-  };
-  projectiles.push({
-    x: tower.x,
-    y: tower.y,
-    velocity,
-    damage: tower.attack,
-    target: targetEnemy,
-  }); // Include target enemy in the projectile
-}
-
-// Draw projectiles
-function drawProjectiles() {
-  ctx.fillStyle = "red";
-  for (const projectile of projectiles) {
-    ctx.beginPath();
-    ctx.arc(projectile.x, projectile.y, projectileSize, 0, Math.PI * 2);
-    ctx.fill();
-    console.log("Draw Projectiles");
-  }
-}
-
-// Update projectiles' positions and check collisions
-function updateProjectiles() {
-  for (let i = 0; i < projectiles.length; i++) {
-    const projectile = projectiles[i];
-    projectile.x += projectile.velocity.x;
-    projectile.y += projectile.velocity.y;
-
-    // Check for collisions with enemies
-    for (let j = 0; j < enemies.length; j++) {
-      const enemy = enemies[j];
-      const distanceToEnemy = distance(projectile, enemy);
-      if (
-        distanceToEnemy < enemySize / 2 &&
-        enemy === projectile.target &&
-        enemy.alive
-      ) {
-        // Enemy hit, reduce its health
-        enemy.health -= projectile.damage;
-        if (enemy.health <= 0) {
-          enemy.alive = false; // Set enemy to dead
-          enemies.splice(j, 1);
-          coins += 10; // Reward for killing an enemy
-        }
-        projectiles.splice(i, 1);
-        return; // No need to check other enemies
-      }
-    }
-
-    // Remove projectiles that are out of bounds
-    if (
-      projectile.x < 0 ||
-      projectile.x > canvas.width ||
-      projectile.y < 0 ||
-      projectile.y > canvas.height
-    ) {
-      projectiles.splice(i, 1);
-      i--; // Adjust index after removing projectile
-    }
-  }
-}
-
 // ================================ BUTTONS ====================================
 
 // Handle mouse click for upgrading tower
@@ -296,7 +301,7 @@ upgradeDamageButton.addEventListener("click", () => {
   if (coins >= upgradeDamageCost) {
     tower.attack += 5;
     coins -= upgradeDamageCost;
-    upgradeDamageCost += 50;
+    upgradeDamageCost += 5;
   }
 });
 
@@ -305,7 +310,7 @@ upgradeAttackSpeedButton.addEventListener("click", () => {
     if (coins >= upgradeAttackSpeedCost) {
       tower.attackSpeed += 0.2;
       coins -= upgradeAttackSpeedCost;
-      upgradeAttackSpeedCost += 50;
+      upgradeAttackSpeedCost += 5;
     }
 });
 
@@ -313,14 +318,14 @@ upgradeHealthButton.addEventListener("click", () => {
   if (coins >= upgradeHealthCost) {
     tower.health += 20;
     coins -= upgradeHealthCost;
-    upgradeHealthCost += 50;
+    upgradeHealthCost += 5;
   }
 });
 upgradeHealthRegenButton.addEventListener("click", () => {
   if (coins >= upgradeHealthRegenCost) {
     tower.healthregen += 20;
     coins -= upgradeHealthRegenCost;
-    upgradeHealthRegenCost += 50;
+    upgradeHealthRegenCost += 5;
   }
 });
 
