@@ -4,27 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tower Defense Game</title>
-    <link rel="stylesheet" href="styles.css>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="game-container">
-      <div id="tower"></div>
+    <!-- ChatGPT game logic
+    <button id="upgradeHealth">Upgrade Health</button>
+    <button id="upgradeAttack">Upgrade Attack</button>
+    <button id="upgradeSpeed">Upgrade Speed</button>
+    <button id="startNewGame" style="display: none">Start New Game</button>
+-->
+    <!--<div id="gameCanvas">-->
+    <canvas id="gameCanvas" width="400" height="1000"></canvas>
+    <div id="overlay">
+      <div id="tower"><img src="tower.png" /></div>
       <!-- Sample enemies -->
-      <div class="enemy" style="top: 200px; left: 100px"></div>
+      <!--<div class="enemy" style="top: 200px; left: 100px"></div>
+      <div class="enemy" style="top: 300px; left: 200px"></div> -->
+
       <!-- Health and wave bars -->
-      <div id="health-bar"></div>
-      <div id="wave-bar"></div>
+      <div id="health-bar">(Health)</div>
+      <div id="wave-bar">Wave:</div>
       <!-- Upgrade buttons -->
-      <div class="upgrade-button" style="bottom: 70px">Damage</div>
-      <div class="upgrade-button" style="bottom: 70px; left: calc(50% + 45px)">
-        Attack Speed
-      </div>
-      <div class="upgrade-button" style="bottom: 20px">Health</div>
-      <div class="upgrade-button" style="bottom: 20px; left: calc(50% + 45px)">
-        Health Regen
-      </div>
+      <div class="upgrade-button" id="upgradeDamage">Damage</div>
+      <div class="upgrade-button" id="upgradeAttackSpeed">Attack Speed</div>
+      <div class="upgrade-button" id="upgradeHealth">Health</div>
+      <div class="upgrade-button" id="upgradeHealthRegen">Health Regen</div>
       <!-- Menu button -->
       <div id="menu-button"></div>
+      <button id="startNewGame" style="display: none">Start New Game</button>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
