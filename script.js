@@ -18,11 +18,12 @@ let enemies = [];
 let tower = {
   x: canvas.width / 2,
   y: canvas.height / 2.7,
-  radius: 23,
+  radius: 25,
   sides: 8,
   health: 100,
   attack: 10,
   attackSpeed: 1,
+  range: 50,
 };
 
 // Enemy properties
@@ -72,7 +73,7 @@ function gameLoop() {
 
 // Spawn a new wave of enemies
 function spawnWave() {
-  for (let i = 0; i < wave * 2; i++) {
+  for (let i = 0; i < wave + 1; i++) {
     let side = Math.floor(Math.random() * 4);
     let x, y;
 
@@ -94,7 +95,7 @@ function spawnWave() {
   }
 
   wave++;
-  enemyHealth += 5;
+  enemyHealth += 1;
 }
 
 // Update the tower's properties
@@ -106,7 +107,7 @@ function updateTower() {
   for (let i = 0; i < enemies.length; i++) {
     const enemy = enemies[i];
     const distanceToEnemy = distance(tower, enemy);
-    if (distanceToEnemy <= tower.radius) {
+    if (distanceToEnemy <= tower.radius + 5) {
       // Enemy is in contact with the tower, reduce tower's health
       tower.health -= 0.1;
     } else if (distanceToEnemy <= tower.range) {
@@ -167,21 +168,21 @@ function distance(point1, point2) {
 // Display game information
 function displayInfo() {
   ctx.fillStyle = "white";
-  ctx.font = "20px Arial";
-  ctx.fillText(`Wave: ${wave}`, 10, 30);
-  ctx.fillText(`Coins: ${coins}`, 10, 60);
-  ctx.fillText(`Tower Health: ${tower.health}`, 10, 90);
-  ctx.fillText(`Upgrade Damage: ${upgradeDamageCost} coins`, 10, 150);
+  ctx.font = "15px Arial";
+  ctx.fillText(`${wave}`, 290, 530);
+  ctx.fillText(`Coins: ${coins}`, 10, 190);
+  ctx.fillText(`${Math.floor(tower.health)}`, 90, 530);
+  ctx.fillText(`Upgrade Damage: ${upgradeDamageCost} coins`, 10, 215);
   ctx.fillText(
     `Upgrade Attack Speed: ${upgradeAttackSpeedCost} coins`,
     10,
-    180
+    240
   );
-  ctx.fillText(`Upgrade Health: ${upgradeHealthCost} coins`, 10, 120);
+  ctx.fillText(`Upgrade Health: ${upgradeHealthCost} coins`, 10, 265);
   ctx.fillText(
     `Upgrade Health Regen: ${upgradeHealthRegenCost} coins`,
     10,
-    150
+    290
   );
 }
 
