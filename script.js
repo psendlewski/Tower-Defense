@@ -1,9 +1,206 @@
 //
-// ================================ VARIABLES====================================
+// ================================ DRAW CANVAS ELEMENTS====================================
 
 // Define canvas and context
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
+// Draw Elements:
+function drawElements() {
+  // Draw health bar
+  ctx.strokeStyle = "grey";
+  ctx.strokeRect(10, 400, 245, 80);
+
+  ctx.beginPath();
+  ctx.moveTo(11, 429);
+  ctx.lineTo(254, 429);
+  ctx.stroke();
+
+  // Draw Wave bar
+  ctx.strokeStyle = "grey";
+  ctx.strokeRect(260, 400, 245, 80);
+
+  ctx.beginPath();
+  ctx.moveTo(261, 429);
+  ctx.lineTo(504, 429);
+  ctx.stroke();
+
+  // --------Draw upgrade buttons---------
+
+  // Damage
+  ctx.beginPath();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "grey";
+  ctx.roundRect(40, 490, 200, 90, 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = "orange";
+  ctx.roundRect(135, 495, 100, 80, 2);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(136, 545);
+  ctx.lineTo(235, 545);
+  ctx.stroke();
+
+  // Attack Speed
+  ctx.beginPath();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "grey";
+  ctx.roundRect(280, 490, 200, 90, 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = "orange";
+  ctx.roundRect(375, 495, 100, 80, 2);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(376, 545);
+  ctx.lineTo(475, 545);
+  ctx.stroke();
+
+  // Health
+  ctx.beginPath();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "grey";
+  ctx.roundRect(40, 590, 200, 90, 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = "orange";
+  ctx.roundRect(135, 595, 100, 80, 2);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(136, 645);
+  ctx.lineTo(235, 645);
+  ctx.stroke();
+
+  // Health Regen
+  ctx.beginPath();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "grey";
+  ctx.roundRect(280, 590, 200, 90, 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.strokeStyle = "orange";
+  ctx.roundRect(375, 595, 100, 80, 2);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(376, 645);
+  ctx.lineTo(475, 645);
+  ctx.stroke();
+
+  // Draw menu button
+  ctx.beginPath();
+  ctx.fillStyle = "gray";
+  ctx.roundRect(480, 10, 30, 30, 3); // Example size and position
+  ctx.stroke();
+  ctx.fill();
+}
+// Draw the tower
+function drawTower() {
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  const angleIncrement = (2 * Math.PI) / tower.sides;
+  for (let i = 0; i < tower.sides; i++) {
+    const angle = i * angleIncrement;
+    const x = tower.x + tower.radius * Math.cos(angle);
+    const y = tower.y + tower.radius * Math.sin(angle);
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.stroke();
+  ctx.fillStyle = "transparent";
+  ctx.fill();
+}
+
+// Draw tower range
+function drawTowerRange() {
+  ctx.strokeStyle = "blue";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
+  ctx.stroke();
+}
+
+// Display game information
+function displayInfo1() {
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
+  ctx.textAlign = "left";
+
+  // Damage
+  ctx.fillText(`Damage`, 45, 545);
+  ctx.fillText(`$: ${upgradeDamageCost}`, 140, 567);
+
+  // Attack Speed
+  ctx.fillText(`Attack`, 287, 530);
+  ctx.fillText(`Speed`, 287, 555);
+  ctx.fillText(`$: ${upgradeAttackSpeedCost}`, 380, 567);
+
+  // Health
+  ctx.fillText(`Health`, 45, 645);
+  ctx.fillText(`$: ${upgradeHealthCost}`, 140, 667);
+
+  // Health Regen
+  ctx.fillText(`Health`, 287, 630);
+  ctx.fillText(`Regen`, 287, 655);
+  ctx.fillText(`$: ${upgradeHealthRegenCost}`, 380, 667);
+
+  ctx.textAlign = "center";
+
+  // Damage
+  ctx.fillText(`${tower.damage}`, 180, 527);
+
+  // Attack Speed
+  ctx.fillText(`${tower.attackSpeed}`, 425, 527);
+
+  // Health
+  ctx.fillText(`${tower.healthMax}`, 180, 627);
+
+  // Health Regen
+  ctx.fillText(`${tower.healthRegen}`, 425, 627);
+}
+function displayInfo2() {
+  ctx.fillStyle = "white";
+  ctx.font = "25px Arial, sans serif";
+
+  // Cash
+  ctx.fillText(`$${cash}`, 40, 40);
+
+  // Wave Bar
+  ctx.fillText(`Wave`, 383, 425);
+  ctx.fillText(`${wave}`, 380, 460);
+
+  // Health Bar
+  ctx.fillText(`Health`, 135, 425);
+  ctx.fillText(`${Math.floor(tower.health)}`, 130, 460);
+}
+
+// Handle click on menu button
+canvas.addEventListener("click", function (event) {
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+
+  if (
+    mouseX > canvas.width - 30 &&
+    mouseX < canvas.width - 10 &&
+    mouseY > 10 &&
+    mouseY < 30
+  ) {
+    // Handle menu button click
+    console.log("Menu button clicked");
+  }
+});
+
+// ================================ VARIABLES====================================
 
 // Define the Buttons
 const upgradeDamageButton = document.getElementById("upgradeDamage");
@@ -18,19 +215,20 @@ const startNewGameButton = document.getElementById("startNewGame");
 let gameOver = false;
 
 // Game variables
-let coins = 100;
+let cash = 100;
 
 let wave = 0;
 let enemies = [];
 let tower = {
   x: canvas.width / 2,
-  y: canvas.height / 2.7,
+  y: canvas.height / 3.37,
   radius: 13,
-  sides: 8,
-  attack: 10,
+  sides: 6,
+  damage: 10,
   attackSpeed: 1,
   health: 100,
-  healthregen: 0,
+  healthMax: 100,
+  healthRegen: 0,
   range: 50,
   shootingCooldown: 50, // Define shooting cooldown
   currentCooldown: 0, // Initialize current cooldown
@@ -61,17 +259,21 @@ function gameLoop() {
     if (enemies.length === 0) {
       spawnWave();
     }
+    drawElements();
+    drawTower();
     updateTower();
     updateEnemies();
     updateProjectiles();
     drawTowerRange(); // Add this line to draw tower range
     drawEnemies();
     drawProjectiles();
-    displayInfo();
+    displayInfo1();
+    displayInfo2();
   } else {
     ctx.fillStyle = "red";
     ctx.font = "40px Arial";
-    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
     startNewGameButton.style.display = "block";
   }
   requestAnimationFrame(gameLoop);
@@ -84,35 +286,7 @@ function distance(point1, point2) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-// Display game information
-function displayInfo() {
-  ctx.fillStyle = "white";
-  ctx.font = "15px Arial";
-  ctx.fillText(`${wave}`, 290, 530);
-  ctx.fillText(`Coins: ${coins}`, 10, 190);
-  ctx.fillText(`${Math.floor(tower.health)}`, 90, 530);
-  ctx.fillText(`Upgrade Damage: ${upgradeDamageCost} coins`, 10, 215);
-  ctx.fillText(
-    `Upgrade Attack Speed: ${upgradeAttackSpeedCost} coins`,
-    10,
-    240
-  );
-  ctx.fillText(`Upgrade Health: ${upgradeHealthCost} coins`, 10, 265);
-  ctx.fillText(
-    `Upgrade Health Regen: ${upgradeHealthRegenCost} coins`,
-    10,
-    290
-  );
-}
 // ================================ TOWER ====================================
-
-// Draw tower range
-function drawTowerRange() {
-  ctx.strokeStyle = "blue";
-  ctx.beginPath();
-  ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
-  ctx.stroke();
-}
 
 // Update the tower's properties
 function updateTower() {
@@ -160,7 +334,7 @@ function shootProjectile(targetEnemy) {
     x: tower.x,
     y: tower.y,
     velocity,
-    damage: tower.attack,
+    damage: tower.damage,
     target: targetEnemy,
   }); // Include target enemy in the projectile
 }
@@ -197,7 +371,7 @@ function updateProjectiles() {
         if (enemy.health <= 0) {
           enemy.alive = false; // Set enemy to dead
           enemies.splice(j, 1);
-          coins += 10; // Reward for killing an enemy
+          cash += 10; // Reward for killing an enemy
         }
         projectiles.splice(i, 1);
         return; // No need to check other enemies
@@ -295,40 +469,40 @@ function drawEnemies() {
 }
 
 // ================================ BUTTONS ====================================
-
+/*
 // Handle mouse click for upgrading tower
 upgradeDamageButton.addEventListener("click", () => {
-  if (coins >= upgradeDamageCost) {
-    tower.attack += 5;
-    coins -= upgradeDamageCost;
+  if (cash >= upgradeDamageCost) {
+    tower.damage += 5;
+    cash -= upgradeDamageCost;
     upgradeDamageCost += 5;
   }
 });
 
 upgradeAttackSpeedButton.addEventListener("click", () => {
-  if (coins >= upgradeAttackSpeedCost)
-    if (coins >= upgradeAttackSpeedCost) {
+  if (cash >= upgradeAttackSpeedCost)
+    if (cash >= upgradeAttackSpeedCost) {
       tower.attackSpeed += 0.2;
-      coins -= upgradeAttackSpeedCost;
+      cash -= upgradeAttackSpeedCost;
       upgradeAttackSpeedCost += 5;
     }
 });
 
 upgradeHealthButton.addEventListener("click", () => {
-  if (coins >= upgradeHealthCost) {
+  if (cash >= upgradeHealthCost) {
     tower.health += 20;
-    coins -= upgradeHealthCost;
+    cash -= upgradeHealthCost;
     upgradeHealthCost += 5;
   }
 });
 upgradeHealthRegenButton.addEventListener("click", () => {
-  if (coins >= upgradeHealthRegenCost) {
+  if (cash >= upgradeHealthRegenCost) {
     tower.healthregen += 20;
-    coins -= upgradeHealthRegenCost;
+    cash -= upgradeHealthRegenCost;
     upgradeHealthRegenCost += 5;
   }
 });
-
+*/
 // Handle "Start New Game" button click
 startNewGameButton.addEventListener("click", () => {
   startNewGame();
@@ -340,20 +514,20 @@ function startNewGame() {
     x: canvas.width / 2,
     y: canvas.height / 2.7,
     radius: 13,
-    sides: 8,
+    sides: 6,
     health: 10,
-    attack: 100,
+    damage: 100,
     attackSpeed: 1,
     range: 50,
     shootingCooldown: 60, // Define shooting cooldown
     currentCooldown: 0, // Initialize current cooldown
   };
-  coins = 100;
+  cash = 100;
   wave = 1;
   enemies = [];
   enemyHealth = 10;
   upgradeHealthCost = 50;
-  upgradeAttackCost = 50;
+  upgradeDamageCost = 50;
   upgradeSpeedCost = 50;
   gameOver = false;
   startNewGameButton.style.display = "none";
