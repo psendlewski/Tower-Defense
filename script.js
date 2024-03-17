@@ -1,5 +1,5 @@
 //
-// ================================ DRAW CANVAS ELEMENTS====================================
+// ============================================ DRAW CANVAS ELEMENTS====================================================
 
 // Define canvas and context
 const canvas = document.getElementById("gameCanvas");
@@ -25,7 +25,7 @@ function drawElements() {
   ctx.lineTo(504, 429);
   ctx.stroke();
 
-  // --------Draw upgrade buttons---------
+  // --------========================Draw upgrade buttons============================---------
 
   // Damage
   ctx.beginPath();
@@ -95,14 +95,14 @@ function drawElements() {
   ctx.lineTo(475, 645);
   ctx.stroke();
 
-  // Draw menu button
+  //---------------------- Draw menu button------------------
   ctx.beginPath();
   ctx.fillStyle = "gray";
-  ctx.roundRect(480, 10, 30, 30, 3); // Example size and position
+  ctx.roundRect(480, 10, 30, 30, 3);
   ctx.stroke();
   ctx.fill();
 }
-// Draw the tower
+// -----------------------Draw the tower---------------------
 function drawTower() {
   ctx.strokeStyle = "red";
   ctx.lineWidth = 1;
@@ -129,7 +129,7 @@ function drawTowerRange() {
   ctx.stroke();
 }
 
-// Display game information
+// ==========================================Display game information====================================
 function displayInfo1() {
   ctx.fillStyle = "white";
   ctx.font = "20px Arial";
@@ -159,7 +159,7 @@ function displayInfo1() {
   ctx.fillText(`${tower.damage}`, 180, 527);
 
   // Attack Speed
-  ctx.fillText(`${tower.attackSpeed}`, 425, 527);
+  ctx.fillText(`${attackSpeedMax}`, 425, 527);
 
   // Health
   ctx.fillText(`${tower.healthMax}`, 180, 627);
@@ -183,24 +183,81 @@ function displayInfo2() {
   ctx.fillText(`${Math.floor(tower.health)}`, 130, 460);
 }
 
-// Handle click on menu button
-canvas.addEventListener("click", function (event) {
-  const rect = canvas.getBoundingClientRect();
-  const mouseX = event.clientX - rect.left;
-  const mouseY = event.clientY - rect.top;
+// =================================================== BUTTONS =========================================================
+// Event Handler for all Buttons
 
-  if (
-    mouseX > canvas.width - 30 &&
-    mouseX < canvas.width - 10 &&
-    mouseY > 10 &&
-    mouseY < 30
-  ) {
-    // Handle menu button click
-    console.log("Menu button clicked");
+canvas.addEventListener("click", function (event) {
+  // Damage
+  const rect1 = { x: 135, y: 495, width: 100, height: 80 }; // Rectangle 1 coordinates
+  // Attack Speed
+  const rect2 = { x: 375, y: 495, width: 100, height: 80 }; // Rectangle 2 coordinates
+  // Health
+  const rect3 = { x: 135, y: 595, width: 100, height: 80 }; // Rectangle 3 coordinates
+  // Health Regen
+  const rect4 = { x: 375, y: 595, width: 100, height: 80 }; // Rectangle 4 coordinates
+
+  // Menu
+  const rect5 = { x: 70, y: 10, width: 50, height: 50 }; // Rectangle 5 coordinates
+
+  const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+  const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+  // Damage
+  if (isInsideRect(mouseX, mouseY, rect1)) {
+    console.log("Damage Button");
+    if (cash >= upgradeDamageCost) {
+      tower.damage += 5;
+      cash -= upgradeDamageCost;
+      upgradeDamageCost += 5;
+    }
+    // Attack Speed
+  } else if (isInsideRect(mouseX, mouseY, rect2)) {
+    console.log("Attack Speed Button");
+    if (cash >= upgradeAttackSpeedCost) {
+      tower.attackSpeed += 0.1;
+      attackSpeedMax = tower.attackSpeed.toFixed(1);
+      console.log(tower.attackSpeed);
+      cash -= upgradeAttackSpeedCost;
+      upgradeAttackSpeedCost += 5;
+      tower.shootingCooldown = 100 / tower.attackSpeed;
+    }
+    // Health
+  } else if (isInsideRect(mouseX, mouseY, rect3)) {
+    console.log("Health Button");
+    if (cash >= upgradeHealthCost) {
+      tower.healthMax += 20;
+      cash -= upgradeHealthCost;
+      upgradeHealthCost += 5;
+      if (tower.health < tower.healthMax - 20) {
+        tower.health += 20;
+      }
+    }
+    // Health Regen
+  } else if (isInsideRect(mouseX, mouseY, rect4)) {
+    console.log("Health Regen Button");
+    if (cash >= upgradeHealthRegenCost) {
+      tower.healthRegen += 1;
+      cash -= upgradeHealthRegenCost;
+      upgradeHealthRegenCost += 5;
+    }
+    // Menu
+  } else if (isInsideRect(mouseX, mouseY, rect5)) {
+    console.log("Menu Button");
+  }
+
+  function isInsideRect(x, y, rect) {
+    if (
+      x >= rect.x &&
+      x <= rect.x + rect.width &&
+      y >= rect.y &&
+      y <= rect.y + rect.height
+    ) {
+      return true;
+    }
   }
 });
 
-// ================================ VARIABLES====================================
+// ===================================================== VARIABLES========================================================
 
 // Define the Buttons
 const upgradeDamageButton = document.getElementById("upgradeDamage");
@@ -219,6 +276,8 @@ let cash = 100;
 
 let wave = 0;
 let enemies = [];
+let enemiesTouchingTower = [];
+
 let tower = {
   x: canvas.width / 2,
   y: canvas.height / 3.37,
@@ -226,13 +285,47 @@ let tower = {
   sides: 6,
   damage: 10,
   attackSpeed: 1,
-  health: 100,
-  healthMax: 100,
+  health: 1000,
+  healthMax: 1000,
   healthRegen: 0,
-  range: 50,
-  shootingCooldown: 50, // Define shooting cooldown
+  range: 100,
+  shootingCooldown: 100, // Define shooting cooldown
   currentCooldown: 0, // Initialize current cooldown
+  healthRegenCooldown: 100,
 };
+
+// Function to reset the game
+function startNewGame() {
+  tower = {
+    x: canvas.width / 2,
+    y: canvas.height / 3.37,
+    radius: 13,
+    sides: 6,
+    health: 1000,
+    healthMax: 1000,
+    healthRegen: 0,
+    damage: 100,
+    attackSpeed: 1,
+    range: 50,
+    shootingCooldown: 100, // Define shooting cooldown
+    currentCooldown: 0, // Initialize current cooldown
+    healthRegenCooldown: 100,
+  };
+  cash = 100;
+  wave = 1;
+  enemies = [];
+  enemiesTouchingTower = [];
+  enemyHealth = 10;
+  upgradeHealthCost = 50;
+  upgradeDamageCost = 50;
+  upgradeSpeedCost = 50;
+  gameOver = false;
+  startNewGameButton.style.display = "none";
+  enemiesCooldown = 100;
+  enemiesCurrentCooldown = 0;
+}
+
+let attackSpeedMax = tower.attackSpeed.toFixed(1);
 
 // Tower upgrade costs
 let upgradeDamageCost = 5;
@@ -241,16 +334,44 @@ let upgradeHealthCost = 5;
 let upgradeHealthRegenCost = 5;
 
 // Enemy properties
-const enemySize = 7;
-const enemySpeed = 2;
+const enemySize = 10;
+const enemySpeed = 5;
 let enemyHealth = 10;
+let enemiesCooldown = 100;
+let enemiesCurrentCooldown = 0;
 
 // Define projectile object
 let projectiles = [];
 const projectileSpeed = 5;
 const projectileSize = 2;
 
-// ================================ GAME LOGIC ====================================
+// ================================================ GAME LOGIC ===========================================================
+
+// Health Regen Function
+function healthRegeneration() {
+  // console.log(tower.healthRegenCooldown);
+  if (
+    tower.healthRegenCooldown <= 0 &&
+    tower.health < tower.healthMax - tower.healthRegen
+  ) {
+    tower.health += tower.healthRegen;
+    tower.healthRegenCooldown = 100;
+  }
+}
+// Take Hit Function
+function takeHit() {
+  if (enemiesCurrentCooldown <= 0 && enemiesCooldown < 100) {
+    tower.health -= 1;
+    enemiesCurrentCooldown = enemiesCooldown;
+  } else if (
+    enemiesCurrentCooldown <= 0 &&
+    enemiesCooldown === 100 &&
+    enemiesTouchingTower.length > 0
+  ) {
+    tower.health -= 1;
+    enemiesCurrentCooldown = enemiesCooldown;
+  }
+}
 
 // Update the game loop
 function gameLoop() {
@@ -263,7 +384,10 @@ function gameLoop() {
     drawTower();
     updateTower();
     updateEnemies();
+    takeHit();
+    updateEnemiesCooldown();
     updateProjectiles();
+    healthRegeneration();
     drawTowerRange(); // Add this line to draw tower range
     drawEnemies();
     drawProjectiles();
@@ -290,10 +414,12 @@ function distance(point1, point2) {
 
 // Update the tower's properties
 function updateTower() {
-  if (tower.health <= 0) {
+  if (tower.health < 1) {
     gameOver = true;
   }
+
   tower.currentCooldown--;
+  tower.healthRegenCooldown--;
 
   // Check for enemy presence and attack
   for (let i = 0; i < enemies.length; i++) {
@@ -301,8 +427,8 @@ function updateTower() {
     const distanceToEnemy = distance(tower, enemy);
 
     if (distanceToEnemy <= tower.radius + 5) {
-      // Enemy is in contact with the tower, reduce tower's health
-      tower.health -= 0.1;
+      // Enemy is in contact with the tower, reduce cooldown
+      enemiesCurrentCooldown--;
       if (enemy.alive && tower.currentCooldown <= 0) {
         shootProjectile(enemy);
         tower.currentCooldown = tower.shootingCooldown;
@@ -346,7 +472,6 @@ function drawProjectiles() {
     ctx.beginPath();
     ctx.arc(projectile.x, projectile.y, projectileSize, 0, Math.PI * 2);
     ctx.fill();
-    console.log("Draw Projectiles");
   }
 }
 
@@ -395,7 +520,6 @@ function updateProjectiles() {
 
 // Function to create a new enemy
 function createEnemy(x, y, health) {
-  console.log("createEnemy");
   return {
     x: x,
     y: y,
@@ -404,6 +528,20 @@ function createEnemy(x, y, health) {
   };
 }
 
+// Draw the enemies
+function drawEnemies() {
+  ctx.strokeStyle = "blue";
+  ctx.lineWidth = 1;
+  ctx.fillStyle = "transparent";
+  for (const enemy of enemies) {
+    ctx.strokeRect(
+      enemy.x - enemySize / 2,
+      enemy.y - enemySize / 2,
+      enemySize,
+      enemySize
+    );
+  }
+}
 // Spawn a new wave of enemies
 function spawnWave() {
   for (let i = 0; i < wave + 1; i++) {
@@ -433,12 +571,19 @@ function spawnWave() {
 
 // Update the enemies' positions and health
 function updateEnemies() {
+  enemiesTouchingTower = []; // Reset the array to start fresh
+
   for (let i = 0; i < enemies.length; i++) {
     const enemy = enemies[i];
     const distanceToTower = distance(tower, enemy);
     const minimumDistance = tower.radius + enemySize / 2; // Minimum distance to maintain
+
     if (distanceToTower <= minimumDistance) {
-      // Enemy is too close to the tower, stop it
+      // Enemy is touching the tower, add it to the array
+      enemiesTouchingTower.push(enemy);
+
+      //console.log("Enemies Touching Tower", enemiesTouchingTower.length);
+      // Optionally, you can continue to avoid further processing for this enemy
       continue;
     }
 
@@ -453,85 +598,18 @@ function updateEnemies() {
   }
 }
 
-// Draw the enemies
-function drawEnemies() {
-  ctx.strokeStyle = "blue";
-  ctx.lineWidth = 1;
-  ctx.fillStyle = "transparent";
-  for (const enemy of enemies) {
-    ctx.strokeRect(
-      enemy.x - enemySize / 2,
-      enemy.y - enemySize / 2,
-      enemySize,
-      enemySize
-    );
+// Enemies Cooldown
+function updateEnemiesCooldown() {
+  enemiesCooldown = 100 / enemiesTouchingTower.length;
+  if (enemiesCurrentCooldown === "Infinity") {
+    enemiesCurrentCooldown = 0;
   }
 }
 
-// ================================ BUTTONS ====================================
-/*
-// Handle mouse click for upgrading tower
-upgradeDamageButton.addEventListener("click", () => {
-  if (cash >= upgradeDamageCost) {
-    tower.damage += 5;
-    cash -= upgradeDamageCost;
-    upgradeDamageCost += 5;
-  }
-});
-
-upgradeAttackSpeedButton.addEventListener("click", () => {
-  if (cash >= upgradeAttackSpeedCost)
-    if (cash >= upgradeAttackSpeedCost) {
-      tower.attackSpeed += 0.2;
-      cash -= upgradeAttackSpeedCost;
-      upgradeAttackSpeedCost += 5;
-    }
-});
-
-upgradeHealthButton.addEventListener("click", () => {
-  if (cash >= upgradeHealthCost) {
-    tower.health += 20;
-    cash -= upgradeHealthCost;
-    upgradeHealthCost += 5;
-  }
-});
-upgradeHealthRegenButton.addEventListener("click", () => {
-  if (cash >= upgradeHealthRegenCost) {
-    tower.healthregen += 20;
-    cash -= upgradeHealthRegenCost;
-    upgradeHealthRegenCost += 5;
-  }
-});
-*/
 // Handle "Start New Game" button click
 startNewGameButton.addEventListener("click", () => {
   startNewGame();
 });
-
-// Function to reset the game
-function startNewGame() {
-  tower = {
-    x: canvas.width / 2,
-    y: canvas.height / 2.7,
-    radius: 13,
-    sides: 6,
-    health: 10,
-    damage: 100,
-    attackSpeed: 1,
-    range: 50,
-    shootingCooldown: 60, // Define shooting cooldown
-    currentCooldown: 0, // Initialize current cooldown
-  };
-  cash = 100;
-  wave = 1;
-  enemies = [];
-  enemyHealth = 10;
-  upgradeHealthCost = 50;
-  upgradeDamageCost = 50;
-  upgradeSpeedCost = 50;
-  gameOver = false;
-  startNewGameButton.style.display = "none";
-}
 
 // Start the game loop
 gameLoop();
