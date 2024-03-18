@@ -1,0 +1,88 @@
+
+Under Attack - Tower Defense
+
+================================ TO DO LIST =========================
+* Stworzenie nowej struktury strony- Grid:
+-pasek Menu po lewej, Sekcja górna, po prawej i na dole
+
+*rozszerzenie Gameboard- 2 nowe canvas po lewej i prawej:
+(po lewej Upgrades, po prawej miejsce na One Time Use Cards)
+
+* dodanie rozwijanego menu z opcjami: finish game (go to menu), menu screen, workshop + upgrades
+* dodanie 4 zakładek upgrades
+* dodanie bossów co 10 wave
+* dodanie skalowania waves, enemies, rewards, upgrades, upgrade costs;
+* dodanie diamentów (resp co 5 minut) oraz Ultimate Weapons
+
+
+
+================================= Logika Gry ==============================
+1) Starship Defense
+- Upgrades za cash zdobyty podczas rundy, 
+- Workshop (for Alloys and Items)
+- Labs- Unlocks (for Coins + time) 
+- One Time Use- Cards (Unlocks i Upgrades za diamonds)
+* Osiągnięcie Wave 100 na najmocniejszej planecie = Odblokowanie nowej planety 
+* Start z nowej planety = nowy Tier (stronger enemies, higher rewards)
+
+3) Mining 
+- Unlock po zdobyciu planety
+- Upgrades za Coins
+- Selling Materials For Coins
+- produkcja 2 nowych Materials (co planetę)
+
+4) Smelting / Crafting / Trader (Items for Diamonds, Gold for Coins): 
+- Mined Materials for Smelting, 
+- Smelted Alloys for Items, Alloys/Items for Coins
+- Smelter/ Crafter Upgrades for Diamonds
+=============================== Waluty w grze ===============================
+
+1) Cash:
+* używany tylko w czasie Rundy, do upgradowania planety
+
+2) Coins:
+* do zdobycia w trakcie rundy Planet Defense, ze sprzedaży Materials, Alloys oraz Items
+* używane do Ulepszania Mines, Smelters, Crafters, Attack/Defense/Utility systems
+
+3) Materials:
+* do zdobycia z Mines, mogą zostać sprzedane za Coins lub użyte w Smelters
+
+4) Alloys:
+* pozyskiwane z Materials w Smelters, mogą zostać sprzedane za coins
+* używane do craftowania Items w Crafterach
+
+5) Items:
+* pozyskiwane z Alloys w Crafterach, mogą zostać sprzedane za Coins
+* używane do Odblokowywania Mines, Smelters, Crafters, Attack/Defense/Utility Upgrades w Workshop
+
+6) Diamonds (BottleNeck):
+* do zdobycia z Bossów (szansa 1% na 1 diamond), z 10 minutowego przycisku Ad (1) oraz Diamond Mine (Paid Unlock).
+* Diamonds są używane do Smeltingu i Craftingu, do wymiany u Tradera, a także do Odblokowywania i Ulepszania Ultimate Weapons
+
+================================= Struktura ==============================
+Struktura Gry:
+
+1) Na górze: 
+-Global Currencies: Coins, Diamonds
+-Posiadane Materials
+-Posiadane Alloys
+-Posiadane Items
+
+2) Na środku Grafika z tekstem / GameBoard
+
+3) Po lewej lista Menu:
+-Battle(z wybranej planety),
+-Workshop
+-Labs
+-Mines(ze wszystkich planet)
+-Smelters
+-Crafters
+-Trader:
+Materials: (Oil, Iron, Copper, Lithium, Aluminium, Magnesium, Titanium, Gold, Uranium), Alloys oraz Items
+
+4) Po prawej
+Lista Planet do szybkiego startu battle
+
+5) Na dole pasek progresu do kolejnej planety
+
+

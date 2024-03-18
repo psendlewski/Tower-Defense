@@ -249,10 +249,9 @@ canvas.addEventListener("click", function (event) {
     }
     // Menu
   } else if (isInsideRect(mouseX, mouseY, rect5)) {
-    if (isMenuVisible) {
-      isMenuVisible = false;
-    } else isMenuVisible = true;
-    console.log(isMenuVisible);
+    pause = !pause;
+    if (pause) drawPause();
+    console.log(pause);
   }
 });
 
@@ -269,30 +268,34 @@ function isInsideRect(x, y, rect) {
 
 // ==== Menu ==============
 
-let isMenuVisible = false; // Flag to track menu visibility
+let isMenuVisible = true; // Flag to track menu visibility
 
 // Define menu options
 const menuOptions = ["Option 1", "Option 2", "Option 3"];
-
-// Define menu styling
-const menuX = 20;
-const menuY = 30;
-const optionHeight = 30;
-const optionPadding = 5;
+/*
+//Define menu styling
+const menuX = 50;
+const menuY = 50;
+const optionHeight = 50;
+const optionPadding = 20;
 const optionTextSize = 16;
-
+*/
 // Draw menu function
-function drawMenu() {
-  // Draw menu background
-
-  ctx.fillStyle = "blue";
+function drawPause() {
+  /* // Draw menu background
+  ctx.fillStyle = "grey";
   ctx.fillRect(
     menuX,
     menuY,
     150,
     menuOptions.length * optionHeight + (menuOptions.length - 1) * optionPadding
-  );
-
+  );*/
+  ctx.fillStyle = "white";
+  ctx.font = "40px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("Pause", canvas.width / 2, canvas.height / 3);
+}
+/*
   // Draw menu options
   ctx.fillStyle = "white";
   ctx.font = optionTextSize + "px Arial";
@@ -305,7 +308,7 @@ function drawMenu() {
     ctx.fillText(option, menuX + optionPadding, optionY);
   });
 } // Clear canvas to hide menu
-
+*/
 // Menu click event listener
 /*
 canvas.addEventListener("click", function (event) {
@@ -344,6 +347,9 @@ const startNewGameButton = document.getElementById("startNewGame");
 // Game over flag
 let gameOver = false;
 
+let newGame = false;
+let pause = true;
+
 // Game variables
 let cash = 100;
 
@@ -369,15 +375,17 @@ let tower = {
 
 // Function to reset the game
 function startNewGame() {
+  newGame = true;
+  pause = false;
   tower = {
     x: canvas.width / 2,
     y: canvas.height / 3.37,
     radius: 13,
     sides: 6,
-    health: 1000,
-    healthMax: 1000,
+    health: 100,
+    healthMax: 100,
     healthRegen: 0,
-    damage: 100,
+    damage: 10,
     attackSpeed: 1,
     range: 50,
     shootingCooldown: 100, // Define shooting cooldown
@@ -389,9 +397,10 @@ function startNewGame() {
   enemies = [];
   enemiesTouchingTower = [];
   enemyHealth = 10;
-  upgradeHealthCost = 50;
-  upgradeDamageCost = 50;
-  upgradeSpeedCost = 50;
+  upgradeDamageCost = 5;
+  upgradeAttackSpeedCost = 5;
+  upgradeHealthCost = 5;
+  upgradeHealthRegenCost = 5;
   gameOver = false;
   startNewGameButton.style.display = "none";
   enemiesCooldown = 100;
@@ -498,12 +507,17 @@ function takeHit() {
 
 // Update the game loop
 function gameLoop() {
-  if (!gameOver) {
+  if (!newGame) {
+    ctx.fillStyle = "white";
+    ctx.font = "40px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Battle", canvas.width / 2, canvas.height / 3);
+    startNewGameButton.style.display = "block";
+  } else if (!gameOver && newGame && !pause) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (enemies.length === 0) {
       spawnWave();
     }
-    if (isMenuVisible) drawMenu();
     updateHighestWave(wave);
     retrieveCoins();
     drawElements();
@@ -519,7 +533,7 @@ function gameLoop() {
     drawProjectiles();
     displayInfo1();
     displayInfo2();
-  } else {
+  } else if (gameOver) {
     ctx.fillStyle = "red";
     ctx.font = "40px Arial";
     ctx.textAlign = "center";
