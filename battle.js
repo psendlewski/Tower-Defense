@@ -26,7 +26,7 @@ function drawElements() {
   ctx.stroke();
 
   // --------========================Draw upgrade buttons============================---------
-
+  /*
   // Damage
   ctx.beginPath();
   ctx.lineWidth = 2;
@@ -94,7 +94,7 @@ function drawElements() {
   ctx.moveTo(376, 645);
   ctx.lineTo(475, 645);
   ctx.stroke();
-
+*/
   //---------------------- Draw menu button------------------
   ctx.beginPath();
   ctx.fillStyle = "gray";
@@ -128,7 +128,7 @@ function drawTowerRange() {
   ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
   ctx.stroke();
 }
-
+/*
 // ==========================================Display game information====================================
 function displayInfo1() {
   ctx.fillStyle = "white";
@@ -152,10 +152,10 @@ function displayInfo1() {
   ctx.fillText(`Health`, 287, 630);
   ctx.fillText(`Regen`, 287, 655);
   ctx.fillText(`$: ${upgradeHealthRegenCost}`, 380, 667);
+*/
+// Highest Wave
 
-  // Highest Wave
-  ctx.fillText(`Highest Wave: ${localStorage.getItem("highestWave")}`, 180, 25);
-
+/*
   ctx.textAlign = "center";
 
   // Damage
@@ -170,24 +170,29 @@ function displayInfo1() {
   // Health Regen
   ctx.fillText(`${tower.healthRegen}`, 425, 627);
 }
+*/
 function displayInfo2() {
   ctx.fillStyle = "white";
-  ctx.font = "25px Arial, sans serif";
-
-  // Wave Bar
-  ctx.fillText(`Wave`, 383, 425);
-  ctx.fillText(`${wave}`, 380, 460);
-
-  // Health Bar
-  ctx.fillText(`Health`, 135, 425);
-  ctx.fillText(`${Math.floor(tower.health)}`, 130, 460);
+  ctx.font = "18px Arial, sans serif";
 
   ctx.textAlign = "left";
   // Cash
-  ctx.fillText(`$ ${cash}`, 10, 40);
+  ctx.fillText(`$ ${cash}`, 10, 80);
 
   // Coins
-  ctx.fillText(`© ${localStorage.getItem("coins")}`, 10, 70);
+  ctx.fillText(`© ${localStorage.getItem("coins")}`, 10, 102);
+
+  ctx.fillText(`Highest Wave: ${localStorage.getItem("highestWave")}`, 180, 77);
+
+  ctx.font = "25px Arial, sans serif";
+  ctx.textAlign = "center";
+  // Wave Bar
+  ctx.fillText(`Wave`, 380, 425);
+  ctx.fillText(`${wave}`, 380, 460);
+
+  // Health Bar
+  ctx.fillText(`Health`, 132, 425);
+  ctx.fillText(`${Math.floor(tower.health)}`, 120, 460);
 }
 
 // =================================================== BUTTONS =========================================================
@@ -359,7 +364,7 @@ let enemiesTouchingTower = [];
 
 let tower = {
   x: canvas.width / 2,
-  y: canvas.height / 3.37,
+  y: canvas.height / 2,
   radius: 13,
   sides: 6,
   damage: 10,
@@ -379,7 +384,7 @@ function startNewGame() {
   pause = false;
   tower = {
     x: canvas.width / 2,
-    y: canvas.height / 3.37,
+    y: canvas.height / 2,
     radius: 13,
     sides: 6,
     health: 100,
@@ -508,10 +513,6 @@ function takeHit() {
 // Update the game loop
 function gameLoop() {
   if (!newGame) {
-    ctx.fillStyle = "white";
-    ctx.font = "40px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("Battle", canvas.width / 2, canvas.height / 3);
     startNewGameButton.style.display = "block";
   } else if (!gameOver && newGame && !pause) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -531,13 +532,12 @@ function gameLoop() {
     drawTowerRange(); // Add this line to draw tower range
     drawEnemies();
     drawProjectiles();
-    displayInfo1();
     displayInfo2();
   } else if (gameOver) {
     ctx.fillStyle = "red";
     ctx.font = "40px Arial";
     ctx.textAlign = "center";
-    ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("Game Over", canvas.width / 2, canvas.height / 1.5);
     startNewGameButton.style.display = "block";
   }
   requestAnimationFrame(gameLoop);

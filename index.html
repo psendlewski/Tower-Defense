@@ -8,11 +8,32 @@
   </head>
   <body>
     <!--<div id="gameCanvas">-->
-    <canvas id="gameCanvas" width="515" height="730"></canvas>
-    <div id="overlay">
-      <!-- Menu button -->
-      <button id="startNewGame" style="display: none">Start New Game</button>
-      <button id="pauseButton" style="display: none">Pause</button>
+  
+    <div class="container">
+      <canvas id="gameCanvas" width="520" height="500"></canvas>
+      <div class="menu">
+        <button class="button">Battle</button>
+        <button class="button">Workshop</button>
+        <button class="button">Labs</button>
+        <button class="button">Mines</button>
+        <button class="button">Smelters</button>
+        <button class="button">Crafters</button>
+        <button class="button">Trader</button>
+<!--Sections -->
+        <div class="top-section"></div>
+        <div class="right-section"></div>
+        <div class="bottom-section"></div>
+<!--Buttons-->
+        <button id="startNewGame" style="display: none">
+          Start New Battle
+        </button>
+        <button id="pauseButton" style="display: none">Pause</button>
+      </div>
+
+        <!-- Game board content goes here -->
+          <!-- Menu button -->
+        </div>
+      </div>
     </div>
     <script src="battle.js"></script>
   </body>
