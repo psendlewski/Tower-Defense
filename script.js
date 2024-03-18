@@ -98,7 +98,7 @@ function drawElements() {
   //---------------------- Draw menu button------------------
   ctx.beginPath();
   ctx.fillStyle = "gray";
-  ctx.roundRect(480, 10, 30, 30, 3);
+  ctx.roundRect(475, 12, 30, 30, 3);
   ctx.stroke();
   ctx.fill();
 }
@@ -153,6 +153,9 @@ function displayInfo1() {
   ctx.fillText(`Regen`, 287, 655);
   ctx.fillText(`$: ${upgradeHealthRegenCost}`, 380, 667);
 
+  // Highest Wave
+  ctx.fillText(`Highest Wave: ${localStorage.getItem("highestWave")}`, 180, 25);
+
   ctx.textAlign = "center";
 
   // Damage
@@ -171,9 +174,6 @@ function displayInfo2() {
   ctx.fillStyle = "white";
   ctx.font = "25px Arial, sans serif";
 
-  // Cash
-  ctx.fillText(`$${cash}`, 40, 40);
-
   // Wave Bar
   ctx.fillText(`Wave`, 383, 425);
   ctx.fillText(`${wave}`, 380, 460);
@@ -181,6 +181,13 @@ function displayInfo2() {
   // Health Bar
   ctx.fillText(`Health`, 135, 425);
   ctx.fillText(`${Math.floor(tower.health)}`, 130, 460);
+
+  ctx.textAlign = "left";
+  // Cash
+  ctx.fillText(`$ ${cash}`, 10, 40);
+
+  // Coins
+  ctx.fillText(`© ${localStorage.getItem("coins")}`, 10, 70);
 }
 
 // =================================================== BUTTONS =========================================================
@@ -197,7 +204,7 @@ canvas.addEventListener("click", function (event) {
   const rect4 = { x: 375, y: 595, width: 100, height: 80 }; // Rectangle 4 coordinates
 
   // Menu
-  const rect5 = { x: 70, y: 10, width: 50, height: 50 }; // Rectangle 5 coordinates
+  const rect5 = { x: 475, y: 12, width: 30, height: 30 }; // Rectangle 5 coordinates
 
   const mouseX = event.clientX - canvas.getBoundingClientRect().left;
   const mouseY = event.clientY - canvas.getBoundingClientRect().top;
@@ -242,20 +249,85 @@ canvas.addEventListener("click", function (event) {
     }
     // Menu
   } else if (isInsideRect(mouseX, mouseY, rect5)) {
-    console.log("Menu Button");
-  }
-
-  function isInsideRect(x, y, rect) {
-    if (
-      x >= rect.x &&
-      x <= rect.x + rect.width &&
-      y >= rect.y &&
-      y <= rect.y + rect.height
-    ) {
-      return true;
-    }
+    if (isMenuVisible) {
+      isMenuVisible = false;
+    } else isMenuVisible = true;
+    console.log(isMenuVisible);
   }
 });
+
+function isInsideRect(x, y, rect) {
+  if (
+    x >= rect.x &&
+    x <= rect.x + rect.width &&
+    y >= rect.y &&
+    y <= rect.y + rect.height
+  ) {
+    return true;
+  }
+}
+
+// ==== Menu ==============
+
+let isMenuVisible = false; // Flag to track menu visibility
+
+// Define menu options
+const menuOptions = ["Option 1", "Option 2", "Option 3"];
+
+// Define menu styling
+const menuX = 20;
+const menuY = 30;
+const optionHeight = 30;
+const optionPadding = 5;
+const optionTextSize = 16;
+
+// Draw menu function
+function drawMenu() {
+  // Draw menu background
+
+  ctx.fillStyle = "blue";
+  ctx.fillRect(
+    menuX,
+    menuY,
+    150,
+    menuOptions.length * optionHeight + (menuOptions.length - 1) * optionPadding
+  );
+
+  // Draw menu options
+  ctx.fillStyle = "white";
+  ctx.font = optionTextSize + "px Arial";
+  menuOptions.forEach((option, index) => {
+    const optionY =
+      menuY +
+      index * (optionHeight + optionPadding) +
+      optionHeight / 2 +
+      optionTextSize / 2;
+    ctx.fillText(option, menuX + optionPadding, optionY);
+  });
+} // Clear canvas to hide menu
+
+// Menu click event listener
+/*
+canvas.addEventListener("click", function (event) {
+  console.log("Menu Click");
+  if (!isMenuVisible) return; // Exit if menu is not visible
+  const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+  const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+  menuOptions.forEach((option, index) => {
+    const optionY = menuY + index * (optionHeight + optionPadding);
+    if (
+      mouseX >= menuX &&
+      mouseX <= menuX + 150 &&
+      mouseY >= optionY &&
+      mouseY <= optionY + optionHeight
+    ) {
+      console.log("Selected option: " + option);
+      isMenuVisible = false; // Hide menu after option is selected
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas to hide menu
+    }
+  });
+});*/
 
 // ===================================================== VARIABLES========================================================
 
@@ -264,6 +336,7 @@ const upgradeDamageButton = document.getElementById("upgradeDamage");
 const upgradeAttackSpeedButton = document.getElementById("upgradeAttackSpeed");
 const upgradeHealthButton = document.getElementById("upgradeHealth");
 const upgradeHealthRegenButton = document.getElementById("upgradeHealthRegen");
+const menuButton = document.getElementById("menu");
 
 // Define the "Start New Game" button
 const startNewGameButton = document.getElementById("startNewGame");
@@ -344,6 +417,56 @@ let enemiesCurrentCooldown = 0;
 let projectiles = [];
 const projectileSpeed = 5;
 const projectileSize = 2;
+// ================================================ LOCAL STORAGE ========================================================
+
+// ===========================Highest Wave ============================
+function updateHighestWave(newWave) {
+  // Retrieve existing highest wave from local storage
+  const highestWave = localStorage.getItem("highestWave");
+
+  // Check if highest wave data exists and compare with new wave
+  if (highestWave !== null) {
+    if (newWave > parseInt(highestWave)) {
+      // Convert to integer for comparison
+      // New wave is higher, update highest wave in local storage
+      localStorage.setItem("highestWave", newWave.toString()); // Convert back to string before saving
+    }
+  } else {
+    // Highest wave data doesn't exist, store new wave as highest wave
+    localStorage.setItem("highestWave", newWave.toString());
+  }
+}
+
+//=========================== Coins ============================
+// Initialize the currency
+let coins;
+
+// Function to update the currency
+function updateCoins(amount) {
+  // Update the currency
+  coins += amount;
+
+  // Save the updated currency to local storage
+  localStorage.setItem("coins", coins);
+}
+
+// Function to retrieve the currency from local storage
+function retrieveCoins() {
+  // Retrieve the currency from local storage
+  const storedCoins = localStorage.getItem("coins");
+
+  // Check if the currency exists in local storage
+  if (storedCoins !== null) {
+    // Convert the stored currency to a number and update the global currency variable
+    coins = parseInt(storedCoins);
+  } else {
+    // If the currency doesn't exist in local storage, initialize it to 0
+    coins = 0;
+    localStorage.setItem("coins", coins);
+  }
+}
+
+// Call the retrieveCurrency function to initialize the currency from local storage
 
 // ================================================ GAME LOGIC ===========================================================
 
@@ -380,6 +503,9 @@ function gameLoop() {
     if (enemies.length === 0) {
       spawnWave();
     }
+    if (isMenuVisible) drawMenu();
+    updateHighestWave(wave);
+    retrieveCoins();
     drawElements();
     drawTower();
     updateTower();
@@ -496,7 +622,8 @@ function updateProjectiles() {
         if (enemy.health <= 0) {
           enemy.alive = false; // Set enemy to dead
           enemies.splice(j, 1);
-          cash += 10; // Reward for killing an enemy
+          cash += 10;
+          updateCoins(1); // Reward for killing an enemy
         }
         projectiles.splice(i, 1);
         return; // No need to check other enemies
