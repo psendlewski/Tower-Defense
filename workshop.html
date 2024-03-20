@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tower Defense Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!--<Main Section>-->
+
+
+
+    <div class="container">
+      <div class="menu">
+        <button class="button"><a href="index.html">Battle</a></button>
+        <button class="button"><a href="workshop.html">Workshop</a></button>
+        <button class="button">Production</button>
+        <button class="button">Mines</button>
+        <button class="button">Smelters</button>
+        <button class="button">Crafters</button>
+        <button class="button">Trader</button>
+        <!--Upgrade Buttons-->
+        <!--Sections -->
+        <div class="top-section"></div>
+        <div class="right-section"></div>
+        <div class="bottom-section"></div>
+        <!--Buttons-->
+        <button id="startNewGame" style="display: none">
+          Start New Battle
+        </button>
+        <button id="pauseButton" style="display: none">Pause</button>
+      </div>
+    </div>
+    <!--Workshop Upgrade Buttons-->
+<!--Attack-->
+<div class="workshop p1">
+<div class="wsub1 wsrow1">
+  <button>
+    <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+      class="wsub-t"
+      >Damage</span
+    ></div>
+  </button>
+  <div class="wsub2 wsrow1">
+    <button>
+      <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+        class="wsub-t"
+        >Attack<br>Speed</span
+      ></div>
+    </button>
+    <div class="wsub3 wsrow1">
+      <button>
+        <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+          class="wsub-t"
+          >Critical<br>Chance</span
+        ></div>
+      </button>
+      <div class="wsub4 wsrow1">
+        <button>
+          <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+            class="wsub-t"
+            >Critical</br>Factor</span
+          ></div>
+        </button>
+        <div class="wsub5 wsrow1">
+          <button>
+            <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+              class="wsub-t"
+              >Range</span
+            ></div>
+          </button>
+          <div class="wsub6 wsrow1">
+            <button>
+              <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+                class="wsub-t"
+                >Damage /</br>Meter</span
+              ></div>
+            </button>
+            <div class="wsub7 wsrow1">
+              <button>
+                <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+                  class="wsub-t"
+                  >Rapid Fire</br>Chance</span
+                ></div>
+              </button>
+              <div class="wsub8 wsrow1">
+                <button>
+                  <img src="AttackUpgradeButton.png" class="wsbutton" /><span
+                    class="wsub-t"
+                    >Rapid Fire</br>Duration</span
+                  ></div>
+                </button>
+              </div>
+<!--Health-->              
+<div class="workshop p2">
+<div class="wsub1 wsrow2">
+  <button>
+    <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+      class="wsub-t"
+      >Health</span
+    ></div>
+  </button>
+  <div class="wsub2 wsrow2">
+    <button>
+      <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+        class="wsub-t"
+        >Health</br>Regen</span
+      ></div>
+    </button>
+    <div class="wsub3 wsrow2">
+      <button>
+        <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+          class="wsub-t"
+          >Defense %</span
+        ></div>
+      </button>
+      <div class="wsub4 wsrow2">
+        <button>
+          <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+            class="wsub-t"
+            >Thorn</br>Damage</span
+          ></div>
+        </button>
+        <div class="wsub5 wsrow2">
+          <button>
+            <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+              class="wsub-t"
+              >Lifesteal</span
+            ></div>
+          </button>
+          <div class="wsub6 wsrow2">
+            <button>
+              <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+                class="wsub-t"
+                >Knockback</br>Force</span
+              ></div>
+            </button>
+            <div class="wsub7 wsrow2">
+              <button>
+                <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+                  class="wsub-t"
+                  >Orbs</span
+                ></div>
+              </button>
+              <div class="wsub8 wsrow2">
+                <button>
+                  <img src="HealthUpgradeButton.png" class="wsbutton" /><span
+                    class="wsub-t"
+                    >Orbs</br>Speed</span
+                  ></div>
+                </button>
+</div></div>
+<!--Utility-->
+<div class="workshop p3">
+  <div class="wsub1 wsrow3">
+    <button>
+      <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+        class="wsub-t"
+        >Cash</br>Bonus</span
+      ></div>
+    </button>
+    <div class="wsub2 wsrow3">
+      <button>
+        <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+          class="wsub-t"
+          >Cash /</br>Wave</span
+        ></div>
+      </button>
+      <div class="wsub3 wsrow3">
+        <button>
+          <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+            class="wsub-t"
+            >Coins /</br>Kill</span
+          ></div>
+        </button>
+        <div class="wsub4 wsrow3">
+          <button>
+            <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+              class="wsub-t"
+              >Coins /</br>Wave</span
+            ></div>
+          </button>
+          <div class="wsub5 wsrow3">
+            <button>
+              <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+                class="wsub-t"
+                >Free</br>Attack</br>Upgrade</span
+              ></div>
+            </button>
+            <div class="wsub6 wsrow3">
+              <button>
+                <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+                  class="wsub-t"
+                  >Free</br>Defense</br>Upgrade</span
+                ></div>
+              </button>
+              <div class="wsub7 wsrow3">
+                <button>
+                  <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+                    class="wsub-t"
+                    >Free</br>Utility</br>Upgrade</span
+                  ></div>
+                </button>
+                <div class="wsub8 wsrow3">
+                  <button>
+                    <img src="UtilityUpgradeButton.png" class="wsbutton" /><span
+                      class="wsub-t"
+                      >Interest /</br>Wave</span
+                    ></div>
+                  </button>
+
+</div>
+    <script src="battle.js"></script>
+  </body>
+</html>

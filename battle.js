@@ -158,6 +158,7 @@ const healthSection = document.querySelector(".healthsection");
 const utilitySection = document.querySelector(".utilitysection");
 //======Upgrade Buttons========
 const aub = document.querySelectorAll(".Aub");
+console.log(aub);
 const hub = document.querySelectorAll(".Hub");
 const uub = document.querySelectorAll(".Uub");
 //======Upgrade Buttons- text======
@@ -194,34 +195,68 @@ const u8 = document.getElementById("u8");
 
 //================================SECTION BUTTONS EVENT LISTENER===========================
 attackSection.addEventListener("click", function () {
-  aub.style.display = "block";
-  hub.style.display = "none";
-  uub.style.display = "none";
-  //===
-  aubt.style.display = "block";
-  hubt.style.display = "none";
-  uubt.style.display = "none";
+  aub.forEach((element) => {
+    element.style.display = "block";
+  });
+  hub.forEach((element) => {
+    element.style.display = "none";
+  });
+  uub.forEach((element) => {
+    element.style.display = "none";
+  });
+  aubt.forEach((element) => {
+    element.style.display = "block";
+  });
+  hubt.forEach((element) => {
+    element.style.display = "none";
+  });
+  uubt.forEach((element) => {
+    element.style.display = "none";
+  });
 });
 
 healthSection.addEventListener("click", function () {
-  aub.style.display = "none";
-  hub.style.display = "block";
-  uub.style.display = "none";
-  //===
-  aubt.style.display = "none";
-  hubt.style.display = "block";
-  uubt.style.display = "none";
+  aub.forEach((element) => {
+    element.style.display = "none";
+  });
+  hub.forEach((element) => {
+    element.style.display = "block";
+  });
+  uub.forEach((element) => {
+    element.style.display = "none";
+  });
+  aubt.forEach((element) => {
+    element.style.display = "none";
+  });
+  hubt.forEach((element) => {
+    element.style.display = "block";
+  });
+  uubt.forEach((element) => {
+    element.style.display = "none";
+  });
 });
 
 utilitySection.addEventListener("click", function () {
-  aub.style.display = "none";
-  hub.style.display = "none";
-  uub.style.display = "block";
-  //===
-  aubt.style.display = "none";
-  hubt.style.display = "none";
-  uubt.style.display = "block";
+  aub.forEach((element) => {
+    element.style.display = "none";
+  });
+  hub.forEach((element) => {
+    element.style.display = "none";
+  });
+  uub.forEach((element) => {
+    element.style.display = "block";
+  });
+  aubt.forEach((element) => {
+    element.style.display = "none";
+  });
+  hubt.forEach((element) => {
+    element.style.display = "none";
+  });
+  uubt.forEach((element) => {
+    element.style.display = "block";
+  });
 });
+
 // ==== Menu ==============
 let isMenuVisible = true; // Flag to track menu visibility
 

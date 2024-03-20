@@ -1,9 +1,7 @@
 ================================ TO DO LIST =========================
 
 
-*dodanie 3 stron upgrades oraz przycisków upgrade (red, green, orange)
-* wyświetlanie coins na górze strony
-
+* wyświetlanie Gold na górze strony
 * dodanie rozwijanego menu z opcjami: finish game (go to menu), menu screen, workshop + upgrades
 * dodanie 4 zakładek upgrades
 * dodanie bossów co 10 wave
@@ -11,55 +9,45 @@
 * dodanie diamentów (resp co 5 minut) oraz Ultimate Weapons
 
 
-
 ================================= Logika Gry ==============================
-1) Starship Defense
-- Upgrades za cash zdobyty podczas rundy, 
-- Workshop (for Alloys and Items)
-- Labs- Unlocks (for Coins + time) 
-- One Time Use- Cards (Unlocks i Upgrades za diamonds)
-* Osiągnięcie Wave 100 na najmocniejszej planecie = Odblokowanie nowej planety 
-* Start z nowej planety = nowy Tier (stronger enemies, higher rewards)
 
-3) Mining 
-- Unlock po zdobyciu planety
-- Upgrades za Coins
-- Selling Materials For Coins
-- produkcja 2 nowych Materials (co planetę)
+1) Planet Defense: Active play, główne źródło Gold
+* Workshop Upgrades za Alloys
+* Battle na wybranym Tier
+* Odblokowanie nowego Tier co 100 Wave
 
-4) Smelting / Crafting / Trader (Items for Diamonds, Gold for Coins): 
-- Mined Materials for Smelting, 
-- Smelted Alloys for Items, Alloys/Items for Coins
-- Smelter/ Crafter Upgrades for Diamonds
-=============================== Waluty w grze ===============================
+2) Mines: źródło Materials potrzebnych do produkcji Alloys,
+* Unlocks i Upgrades za Gold
+* Sprzedaż Materials za Gold
 
-1) Cash:
-* używany tylko w czasie Rundy, do upgradowania planety
+3) Smelters: źródło Alloys potrzebnych do Workshop Upgrades,
+* Unlocks i Upgrades za Gold
+* Sprzedaż Alloys za Gold
 
-2) Coins:
-* do zdobycia w trakcie rundy Planet Defense, ze sprzedaży Materials, Alloys oraz Items
-* używane do Ulepszania Mines, Smelters, Crafters, Attack/Defense/Utility systems
+5) Sell Planet- możliwe po osiągnięciu min. 100k Planet Value
+* Cały Gold, Wszystkie Mines, Smelters i Crafters = 0
+* Defense Workshop Upgrades zostają
+* Sprzedaż planety za Credits
 
-3) Materials:
-* do zdobycia z Mines, mogą zostać sprzedane za Coins lub użyte w Smelters
+6) Credits są używane w Space Station do stałego ulepszenia statystyk Eko:
+* Gold Income, Mining, Crafter, Smelter Speed/ Upgrade costs/ Material Costs, Resources Value
 
-4) Alloys:
-* pozyskiwane z Materials w Smelters, mogą zostać sprzedane za coins
-* używane do craftowania Items w Crafterach
+7) Diamonds- są używane do losowania Modules i odblokowywania Module Slots
+* Diamonds są do pozyskania z 10min Ad Button, oraz z bossów (szansa zależna od Tier)
 
-5) Items:
-* pozyskiwane z Alloys w Crafterach, mogą zostać sprzedane za Coins
-* używane do Odblokowywania Mines, Smelters, Crafters, Attack/Defense/Utility Upgrades w Workshop
+8) Modules- do wylosowania za Diamonds, do założenia po 1 z każdego typu
+* 3 jakości: Common, Rare oraz Epic
+* Common oraz Rare Modules mogą zostać zamienione na Shards
+* Modules dają stałe bonusy do Damage, Attack Speed, Health, Lifesteal, Cash/ Coin Bonus
+* Ilość Bonusu jest zależna od jakości Module oraz od ilości Upgrade
+* Modules można ulepszać przy użyciu Attack, Health i Utility Shards
 
-6) Diamonds (BottleNeck):
-* do zdobycia z Bossów (szansa 1% na 1 diamond), z 10 minutowego przycisku Ad (1) oraz Diamond Mine (Paid Unlock).
-* Diamonds są używane do Smeltingu i Craftingu, do wymiany u Tradera, a także do Odblokowywania i Ulepszania Ultimate Weapons
 
 ================================= Struktura ==============================
 Struktura Gry:
 
 1) Na górze: 
--Global Currencies: Coins, Diamonds
+-Global Currencies: Gold, Diamonds
 -Posiadane Materials
 -Posiadane Alloys
 -Posiadane Items
