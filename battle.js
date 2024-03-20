@@ -25,80 +25,10 @@ function drawElements() {
   ctx.lineTo(504, 429);
   ctx.stroke();
 
-  // --------========================Draw upgrade buttons============================---------
-  /*
-  // Damage
-  ctx.beginPath();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "grey";
-  ctx.roundRect(40, 490, 200, 90, 5);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.strokeStyle = "orange";
-  ctx.roundRect(135, 495, 100, 80, 2);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(136, 545);
-  ctx.lineTo(235, 545);
-  ctx.stroke();
-
-  // Attack Speed
-  ctx.beginPath();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "grey";
-  ctx.roundRect(280, 490, 200, 90, 5);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.strokeStyle = "orange";
-  ctx.roundRect(375, 495, 100, 80, 2);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(376, 545);
-  ctx.lineTo(475, 545);
-  ctx.stroke();
-
-  // Health
-  ctx.beginPath();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "grey";
-  ctx.roundRect(40, 590, 200, 90, 5);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.strokeStyle = "orange";
-  ctx.roundRect(135, 595, 100, 80, 2);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(136, 645);
-  ctx.lineTo(235, 645);
-  ctx.stroke();
-
-  // Health Regen
-  ctx.beginPath();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "grey";
-  ctx.roundRect(280, 590, 200, 90, 5);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.strokeStyle = "orange";
-  ctx.roundRect(375, 595, 100, 80, 2);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(376, 645);
-  ctx.lineTo(475, 645);
-  ctx.stroke();
-*/
-  //---------------------- Draw menu button------------------
+  //---------------------- Draw Pause button------------------
   ctx.beginPath();
   ctx.fillStyle = "gray";
-  ctx.roundRect(475, 12, 30, 30, 3);
+  ctx.roundRect(480, 65, 30, 30, 3);
   ctx.stroke();
   ctx.fill();
 }
@@ -128,49 +58,9 @@ function drawTowerRange() {
   ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
   ctx.stroke();
 }
-/*
+
 // ==========================================Display game information====================================
-function displayInfo1() {
-  ctx.fillStyle = "white";
-  ctx.font = "20px Arial";
-  ctx.textAlign = "left";
 
-  // Damage
-  ctx.fillText(`Damage`, 45, 545);
-  ctx.fillText(`$: ${upgradeDamageCost}`, 140, 567);
-
-  // Attack Speed
-  ctx.fillText(`Attack`, 287, 530);
-  ctx.fillText(`Speed`, 287, 555);
-  ctx.fillText(`$: ${upgradeAttackSpeedCost}`, 380, 567);
-
-  // Health
-  ctx.fillText(`Health`, 45, 645);
-  ctx.fillText(`$: ${upgradeHealthCost}`, 140, 667);
-
-  // Health Regen
-  ctx.fillText(`Health`, 287, 630);
-  ctx.fillText(`Regen`, 287, 655);
-  ctx.fillText(`$: ${upgradeHealthRegenCost}`, 380, 667);
-*/
-// Highest Wave
-
-/*
-  ctx.textAlign = "center";
-
-  // Damage
-  ctx.fillText(`${tower.damage}`, 180, 527);
-
-  // Attack Speed
-  ctx.fillText(`${attackSpeedMax}`, 425, 527);
-
-  // Health
-  ctx.fillText(`${tower.healthMax}`, 180, 627);
-
-  // Health Regen
-  ctx.fillText(`${tower.healthRegen}`, 425, 627);
-}
-*/
 function displayInfo2() {
   ctx.fillStyle = "white";
   ctx.font = "18px Arial, sans serif";
@@ -196,24 +86,15 @@ function displayInfo2() {
 }
 
 // =================================================== BUTTONS =========================================================
-// Event Handler for all Buttons
-
+// Event Handler for Buttons inside Canvas
 canvas.addEventListener("click", function (event) {
-  // Damage
-  const rect1 = { x: 135, y: 495, width: 100, height: 80 }; // Rectangle 1 coordinates
-  // Attack Speed
-  const rect2 = { x: 375, y: 495, width: 100, height: 80 }; // Rectangle 2 coordinates
-  // Health
-  const rect3 = { x: 135, y: 595, width: 100, height: 80 }; // Rectangle 3 coordinates
-  // Health Regen
-  const rect4 = { x: 375, y: 595, width: 100, height: 80 }; // Rectangle 4 coordinates
-
   // Menu
-  const rect5 = { x: 475, y: 12, width: 30, height: 30 }; // Rectangle 5 coordinates
+  const rect5 = { x: 430, y: 55, width: 30, height: 30 }; // Rectangle 5 coordinates
 
   const mouseX = event.clientX - canvas.getBoundingClientRect().left;
   const mouseY = event.clientY - canvas.getBoundingClientRect().top;
-
+  console.log(mouseX, mouseY);
+  /*
   // Damage
   if (isInsideRect(mouseX, mouseY, rect1)) {
     console.log("Damage Button");
@@ -251,9 +132,10 @@ canvas.addEventListener("click", function (event) {
       tower.healthRegen += 1;
       cash -= upgradeHealthRegenCost;
       upgradeHealthRegenCost += 5;
-    }
-    // Menu
-  } else if (isInsideRect(mouseX, mouseY, rect5)) {
+    }};*/
+
+  // Menu
+  /*else*/ if (isInsideRect(mouseX, mouseY, rect5)) {
     pause = !pause;
     if (pause) drawPause();
     console.log(pause);
@@ -270,9 +152,77 @@ function isInsideRect(x, y, rect) {
     return true;
   }
 }
+// =================================================UPGRADE BUTTONS======================================================
+const attackSection = document.querySelector(".attacksection");
+const healthSection = document.querySelector(".healthsection");
+const utilitySection = document.querySelector(".utilitysection");
+//======Upgrade Buttons========
+const aub = document.querySelectorAll(".Aub");
+const hub = document.querySelectorAll(".Hub");
+const uub = document.querySelectorAll(".Uub");
+//======Upgrade Buttons- text======
+const aubt = document.querySelectorAll(".Aub-t");
+const hubt = document.querySelectorAll(".Hub-t");
+const uubt = document.querySelectorAll(".Uub-t");
+//======Attack=====
+const a1 = document.getElementById("a1");
+const a2 = document.getElementById("a2");
+const a3 = document.getElementById("a3");
+const a4 = document.getElementById("a4");
+const a5 = document.getElementById("a5");
+const a6 = document.getElementById("a6");
+const a7 = document.getElementById("a7");
+const a8 = document.getElementById("a8");
+//======Health======
+const h1 = document.getElementById("h1");
+const h2 = document.getElementById("h2");
+const h3 = document.getElementById("h3");
+const h4 = document.getElementById("h4");
+const h5 = document.getElementById("h5");
+const h6 = document.getElementById("h6");
+const h7 = document.getElementById("h7");
+const h8 = document.getElementById("h8");
+//======Utility=======
+const u1 = document.getElementById("u1");
+const u2 = document.getElementById("u2");
+const u3 = document.getElementById("u3");
+const u4 = document.getElementById("u4");
+const u5 = document.getElementById("u5");
+const u6 = document.getElementById("u6");
+const u7 = document.getElementById("u7");
+const u8 = document.getElementById("u8");
 
+//================================SECTION BUTTONS EVENT LISTENER===========================
+attackSection.addEventListener("click", function () {
+  aub.style.display = "block";
+  hub.style.display = "none";
+  uub.style.display = "none";
+  //===
+  aubt.style.display = "block";
+  hubt.style.display = "none";
+  uubt.style.display = "none";
+});
+
+healthSection.addEventListener("click", function () {
+  aub.style.display = "none";
+  hub.style.display = "block";
+  uub.style.display = "none";
+  //===
+  aubt.style.display = "none";
+  hubt.style.display = "block";
+  uubt.style.display = "none";
+});
+
+utilitySection.addEventListener("click", function () {
+  aub.style.display = "none";
+  hub.style.display = "none";
+  uub.style.display = "block";
+  //===
+  aubt.style.display = "none";
+  hubt.style.display = "none";
+  uubt.style.display = "block";
+});
 // ==== Menu ==============
-
 let isMenuVisible = true; // Flag to track menu visibility
 
 // Define menu options

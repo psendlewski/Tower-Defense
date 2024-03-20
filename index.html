@@ -8,7 +8,7 @@
   </head>
   <body>
     <!--<div id="gameCanvas">-->
-  
+
     <div class="container">
       <canvas id="gameCanvas" width="520" height="500"></canvas>
       <div class="menu">
@@ -19,22 +19,201 @@
         <button class="button">Smelters</button>
         <button class="button">Crafters</button>
         <button class="button">Trader</button>
-<!--Sections -->
+        <!--Upgrade Buttons-->
+        <!--Sections -->
         <div class="top-section"></div>
         <div class="right-section"></div>
         <div class="bottom-section"></div>
-<!--Buttons-->
+        <!--Buttons-->
         <button id="startNewGame" style="display: none">
           Start New Battle
         </button>
         <button id="pauseButton" style="display: none">Pause</button>
       </div>
-
-        <!-- Game board content goes here -->
-          <!-- Menu button -->
-        </div>
-      </div>
     </div>
+    <!--Upgrade Buttons-->
+
+    <button class="attacksection">
+      <img src="AttackSectionButton.png" width="90px" />
+    </button>
+    <button class="healthsection">
+      <img src="HealthSectionButton.png" width="90px" />
+    </button>
+    <button class="utilitysection">
+      <img src="UtilitySectionButton.png" width="90px" />
+    </button>
+
+<!--Attack-->
+<div class="ub1 Aub" id="a1">
+  <button>
+    <img src="AttackUpgradeButton.png" class="button-img" /><span
+      class="Aub-t"
+      >Damage</span
+    ></div>
+  </button>
+  <div class="ub2 Aub" id="a2">
+    <button>
+      <img src="AttackUpgradeButton.png" class="button-img" /><span
+        class="Aub-t"
+        >Attack<br>Speed</span
+      ></div>
+    </button>
+    <div class="ub3 Aub" id="a3">
+      <button>
+        <img src="AttackUpgradeButton.png" class="button-img" /><span
+          class="Aub-t"
+          >Critical<br>Chance</span
+        ></div>
+      </button>
+      <div class="ub4 Aub" id="a4">
+        <button>
+          <img src="AttackUpgradeButton.png" class="button-img" /><span
+            class="Aub-t"
+            >Critical</br>Factor</span
+          ></div>
+        </button>
+        <div class="ub5 Aub" id="a5">
+          <button>
+            <img src="AttackUpgradeButton.png" class="button-img" /><span
+              class="Aub-t"
+              >Range</span
+            ></div>
+          </button>
+          <div class="ub6 Aub" id="a6">
+            <button>
+              <img src="AttackUpgradeButton.png" class="button-img" /><span
+                class="Aub-t"
+                >Damage /</br>Meter</span
+              ></div>
+            </button>
+            <div class="ub7 Aub" id="a7">
+              <button>
+                <img src="AttackUpgradeButton.png" class="button-img" /><span
+                  class="Aub-t"
+                  >Rapid Fire</br>Chance</span
+                ></div>
+              </button>
+              <div class="ub8 Aub" id="a8">
+                <button>
+                  <img src="AttackUpgradeButton.png" class="button-img" /><span
+                    class="Aub-t"
+                    >Rapid Fire</br>Duration</span
+                  ></div>
+                </button>
+  <!--Health-->                
+<div class="ub1 Hub" id="h1">
+  <button>
+    <img src="HealthUpgradeButton.png" class="button-img" /><span
+      class="Hub-t"
+      >Health</span
+    ></div>
+  </button>
+  <div class="ub2 Hub" id="h2">
+    <button>
+      <img src="HealthUpgradeButton.png" class="button-img" /><span
+        class="Hub-t"
+        >Health</br>Regen</span
+      ></div>
+    </button>
+    <div class="ub3 Hub" id="h3">
+      <button>
+        <img src="HealthUpgradeButton.png" class="button-img" /><span
+          class="Hub-t"
+          >Defense %</span
+        ></div>
+      </button>
+      <div class="ub4 Hub" id="h4">
+        <button>
+          <img src="HealthUpgradeButton.png" class="button-img" /><span
+            class="Hub-t"
+            >Thorn</br>Damage</span
+          ></div>
+        </button>
+        <div class="ub5 Hub" id="h5">
+          <button>
+            <img src="HealthUpgradeButton.png" class="button-img" /><span
+              class="Hub-t"
+              >Lifesteal</span
+            ></div>
+          </button>
+          <div class="ub6 Hub" id="h6">
+            <button>
+              <img src="HealthUpgradeButton.png" class="button-img" /><span
+                class="Hub-t"
+                >Knockback</br>Force</span
+              ></div>
+            </button>
+            <div class="ub7 Hub" id="h7">
+              <button>
+                <img src="HealthUpgradeButton.png" class="button-img" /><span
+                  class="Hub-t"
+                  >Orbs</span
+                ></div>
+              </button>
+              <div class="ub8 Hub" id="h8">
+                <button>
+                  <img src="HealthUpgradeButton.png" class="button-img" /><span
+                    class="Hub-t"
+                    >Orbs</br>Speed</span
+                  ></div>
+                </button>
+<!--Utility-->
+<div class="ub1 Uub" id="u1">
+  <button>
+    <img src="UtilityUpgradeButton.png" class="button-img" /><span
+      class="Uub-t"
+      >Cash</br>Bonus</span
+    ></div>
+  </button>
+  <div class="ub2 Uub" id="u2">
+    <button>
+      <img src="UtilityUpgradeButton.png" class="button-img" /><span
+        class="Uub-t"
+        >Cash /</br>Wave</span
+      ></div>
+    </button>
+    <div class="ub3 Uub" id="u3">
+      <button>
+        <img src="UtilityUpgradeButton.png" class="button-img" /><span
+          class="Uub-t"
+          >Coins /</br>Kill</span
+        ></div>
+      </button>
+      <div class="ub4 Uub" id="u4">
+        <button>
+          <img src="UtilityUpgradeButton.png" class="button-img" /><span
+            class="Uub-t"
+            >Coins /</br>Wave</span
+          ></div>
+        </button>
+        <div class="ub5 Uub" id="u5">
+          <button>
+            <img src="UtilityUpgradeButton.png" class="button-img" /><span
+              class="Uub-t"
+              >Free</br>Attack</br>Upgrade</span
+            ></div>
+          </button>
+          <div class="ub6 Uub" id="u6">
+            <button>
+              <img src="UtilityUpgradeButton.png" class="button-img" /><span
+                class="Uub-t"
+                >Free</br>Defense</br>Upgrade</span
+              ></div>
+            </button>
+            <div class="ub7 Uub" id="u7">
+              <button>
+                <img src="UtilityUpgradeButton.png" class="button-img" /><span
+                  class="Uub-t"
+                  >Free</br>Utility</br>Upgrade</span
+                ></div>
+              </button>
+              <div class="ub8 Uub" id="u8">
+                <button>
+                  <img src="UtilityUpgradeButton.png" class="button-img" /><span
+                    class="Uub-t"
+                    >Interest /</br>Wave</span
+                  ></div>
+                </button>
     <script src="battle.js"></script>
   </body>
 </html>

@@ -1,12 +1,8 @@
-
-Under Attack - Tower Defense
-
 ================================ TO DO LIST =========================
-* Stworzenie nowej struktury strony- Grid:
--pasek Menu po lewej, Sekcja górna, po prawej i na dole
 
-*rozszerzenie Gameboard- 2 nowe canvas po lewej i prawej:
-(po lewej Upgrades, po prawej miejsce na One Time Use Cards)
+
+*dodanie 3 stron upgrades oraz przycisków upgrade (red, green, orange)
+* wyświetlanie coins na górze strony
 
 * dodanie rozwijanego menu z opcjami: finish game (go to menu), menu screen, workshop + upgrades
 * dodanie 4 zakładek upgrades

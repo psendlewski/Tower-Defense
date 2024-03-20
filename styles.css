@@ -89,6 +89,7 @@ body {
   border: 1px solid rgb(43, 43, 43);
 }
 .right-section {
+  z-index: 1;
   height: 400px;
   width: 350px;
   display: flex;
@@ -114,4 +115,135 @@ body {
 
 .button:hover {
   background-color: #555;
+}
+
+/* ---------------Section Buttons---------------*/
+.attacksection {
+  display: flex;
+  position: absolute;
+  color: white;
+  cursor: pointer;
+  top: 520px;
+  left: 735px;
+}
+.healthsection {
+  display: flex;
+  position: absolute;
+  color: white;
+  cursor: pointer;
+  top: 520px;
+  left: 830px;
+}
+.utilitysection {
+  display: flex;
+  position: absolute;
+  color: white;
+  cursor: pointer;
+  top: 520px;
+  left: 925px;
+}
+
+/*---------------------------------Upgrade Buttons------------------------------------*/
+button {
+  z-index: 500;
+  background-color: black;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button-img {
+  z-index: 100;
+  width: 140px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  position: relative;
+  top: 0%;
+  left: 0%;
+}
+
+.Aub-t {
+  display: block;
+  z-index: 900;
+  position: relative;
+  top: -55px;
+  left: 5px;
+  color: white; /* Adjust text color */
+  font-size: 12px; /* Adjust text size */
+  font-family: Arial, sans-serif; /* Adjust font family */
+  text-align: left;
+}
+.Hub-t {
+  display: none;
+  z-index: 900;
+  position: relative;
+  top: -55px;
+  left: 5px;
+  color: white; /* Adjust text color */
+  font-size: 12px; /* Adjust text size */
+  font-family: Arial, sans-serif; /* Adjust font family */
+  text-align: left;
+}
+.Uub-t {
+  display: none;
+  z-index: 900;
+  position: relative;
+  top: -55px;
+  left: 5px;
+  color: white; /* Adjust text color */
+  font-size: 12px; /* Adjust text size */
+  font-family: Arial, sans-serif; /* Adjust font family */
+  text-align: left;
+}
+.Aub {
+  display: block;
+}
+.Hub {
+  display: none;
+}
+.Uub {
+  display: none;
+}
+
+.ub1 {
+  position: absolute;
+  top: 170px;
+  left: 730px;
+}
+.ub2 {
+  position: absolute;
+  top: 170px;
+  left: 875px;
+}
+.ub3 {
+  position: absolute;
+  top: 240px;
+  left: 730px;
+}
+.ub4 {
+  position: absolute;
+  top: 240px;
+  left: 875px;
+}
+.ub5 {
+  position: absolute;
+  top: 310px;
+  left: 730px;
+}
+.ub6 {
+  position: absolute;
+  top: 310px;
+  left: 875px;
+}
+.ub7 {
+  position: absolute;
+  top: 380px;
+  left: 730px;
+}
+.ub8 {
+  position: absolute;
+  top: 380px;
+  left: 875px;
 }
