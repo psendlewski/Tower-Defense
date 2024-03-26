@@ -1,5 +1,7 @@
 ================================ TO DO LIST =========================
 
+* dodanie strony production z 10 kopalniami, dodanie smelters oraz crafters
+* dodanie funkcji do każdego materiału i produkcji
 
 * wyświetlanie Gold na górze strony
 * dodanie rozwijanego menu z opcjami: finish game (go to menu), menu screen, workshop + upgrades

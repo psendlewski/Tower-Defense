@@ -116,6 +116,19 @@ a:visited {
   border: 1px solid rgb(43, 43, 43);
   opacity: 0.9;
 }
+.right-section {
+  height: 450px;
+  width: 300px;
+  display: flex;
+  position: absolute;
+  top: 100px;
+  left: 730px;
+  background-color: black;
+  border: 1px solid rgb(43, 43, 43);
+  border-radius: 3px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  opacity: 0.8;
+}
 
 .button:hover {
   background-color: #555;
@@ -127,24 +140,24 @@ a:visited {
   position: absolute;
   color: white;
   cursor: pointer;
-  top: 520px;
-  left: 735px;
+  top: 515px;
+  left: 733px;
 }
 .healthsection {
   display: flex;
   position: absolute;
   color: white;
   cursor: pointer;
-  top: 520px;
-  left: 830px;
+  top: 515px;
+  left: 831px;
 }
 .utilitysection {
   display: flex;
   position: absolute;
   color: white;
   cursor: pointer;
-  top: 520px;
-  left: 925px;
+  top: 515px;
+  left: 930px;
 }
 
 /*---------------------------------Battle Upgrade Buttons------------------------------------*/
@@ -157,7 +170,7 @@ a:visited {
   border: 2px solid rgb(43, 43, 43);
 }
 .workshop {
-  opacity: 0.8;
+  opacity: 0.9;
   z-index: 1;
   display: flex;
   background-color: black;
@@ -167,23 +180,23 @@ a:visited {
 }
 .p1 {
   position: absolute;
-  height: 450px;
+  height: 283px;
   width: 256px;
-  top: 100px;
+  top: 265px;
   left: 260px;
 }
 .p2 {
   position: absolute;
-  height: 450px;
+  height: 283px;
   width: 256px;
-  top: 100px;
+  top: 265px;
   left: 516px;
 }
 .p3 {
   position: absolute;
-  height: 450px;
+  height: 283px;
   width: 257px;
-  top: 100px;
+  top: 265px;
   left: 772px;
 }
 
@@ -358,4 +371,113 @@ button {
 .wsub8 {
   position: absolute;
   top: 570px;
+}
+/*---------------------------------Production------------------------------------*/
+.production-menu {
+  height: 250px;
+  width: 500px;
+  display: flex;
+  position: relative;
+  top: 300px;
+  left: 270px;
+  background-color: black;
+  border: 1px solid rgb(43, 43, 43);
+  border-radius: 3px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  opacity: 0.9;
+}
+.production-bar {
+  z-index: 200;
+  width: 400px; /* Adjust width as needed */
+  height: 130px; /* Maintain aspect ratio */
+  position: relative;
+  opacity: 1;
+}
+.pbar-t {
+  display: block;
+  z-index: 900;
+  color: rgba(255, 255, 255, 0.651); /* Adjust text color */
+  font-size: 25px; /* Adjust text size */
+  font-family: Arial, sans-serif; /* Adjust font family */
+  text-align: left;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.production-button {
+  z-index: 500;
+  width: 200px; /* Adjust width as needed */
+  height: 80px; /* Maintain aspect ratio */
+  position: absolute;
+  top: 13px;
+  left: 90px;
+}
+.material-image {
+  z-index: 900;
+  width: 50px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  position: absolute;
+  top: 30px;
+  left: 115px;
+}
+.pbutton-t {
+  display: block;
+  z-index: 900;
+  position: absolute;
+  top: -65px;
+  left: 10px;
+  color: white; /* Adjust text color */
+  font-size: 14px; /* Adjust text size */
+  font-family: Arial, sans-serif; /* Adjust font family */
+  text-align: left;
+}
+.pb1 {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+}
+.pb2 {
+  position: absolute;
+  top: 160px;
+  left: 40px;
+}
+.pb3 {
+  position: absolute;
+  top: 310px;
+  left: 40px;
+}
+.pb4 {
+  position: absolute;
+  top: 460px;
+  left: 40px;
+}
+.pb5 {
+  position: absolute;
+  top: 610px;
+  left: 40px;
+}
+.pb6 {
+  position: absolute;
+  top: 760px;
+  left: 40px;
+}
+.pb7 {
+  position: absolute;
+  top: 910px;
+  left: 40px;
+}
+.pb8 {
+  position: absolute;
+  top: 1060px;
+  left: 40px;
+}
+.pb9 {
+  position: absolute;
+  top: 1210px;
+  left: 40px;
+}
+.pb10 {
+  position: absolute;
+  top: 1360px;
+  left: 40px;
 }
