@@ -377,7 +377,7 @@ function startNewGame() {
     healthRegen: 0,
     damage: 10,
     attackSpeed: 1,
-    range: 50,
+    range: 100,
     shootingCooldown: 100, // Define shooting cooldown
     currentCooldown: 0, // Initialize current cooldown
     healthRegenCooldown: 100,
@@ -407,7 +407,7 @@ let upgradeHealthRegenCost = 5;
 
 // Enemy properties
 const enemySize = 10;
-const enemySpeed = 5;
+const enemySpeed = 1.5;
 let enemyHealth = 10;
 let enemiesCooldown = 100;
 let enemiesCurrentCooldown = 0;
