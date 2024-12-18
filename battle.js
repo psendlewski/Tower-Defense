@@ -414,7 +414,7 @@ let enemiesCurrentCooldown = 0;
 
 // Define projectile object
 let projectiles = [];
-const projectileSpeed = 15;
+const projectileSpeed = 5;
 const projectileSize = 2;
 // ================================================ LOCAL STORAGE ========================================================
 
@@ -602,7 +602,6 @@ function drawProjectiles() {
   }
 }
 
-// Update projectiles' positions and check collisions
 function updateProjectiles() {
   for (let i = 0; i < projectiles.length; i++) {
     const projectile = projectiles[i];
@@ -613,6 +612,7 @@ function updateProjectiles() {
     for (let j = 0; j < enemies.length; j++) {
       const enemy = enemies[j];
       const distanceToEnemy = distance(projectile, enemy);
+
       if (
         distanceToEnemy < enemySize / 2 &&
         enemy === projectile.target &&
@@ -626,8 +626,10 @@ function updateProjectiles() {
           cash += 10;
           updateCoins(1); // Reward for killing an enemy
         }
+
         projectiles.splice(i, 1);
-        return; // No need to check other enemies
+        i--; // Adjust index after removing projectile
+        break; // Break out of collision loop for this projectile
       }
     }
 
@@ -643,7 +645,6 @@ function updateProjectiles() {
     }
   }
 }
-
 // ================================ ENEMIES ====================================
 
 // Function to create a new enemy
