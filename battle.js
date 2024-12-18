@@ -347,18 +347,19 @@ let wave = 0;
 let enemies = [];
 let enemiesTouchingTower = [];
 
+let attackSpeed = 3;
+
 let tower = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   radius: 13,
   sides: 6,
   damage: 10,
-  attackSpeed: 1,
   health: 1000,
   healthMax: 1000,
   healthRegen: 0,
   range: 100,
-  shootingCooldown: 100, // Define shooting cooldown
+  shootingCooldown: 100 / attackSpeed, // Define shooting cooldown
   currentCooldown: 0, // Initialize current cooldown
   healthRegenCooldown: 100,
 };
@@ -376,9 +377,8 @@ function startNewGame() {
     healthMax: 100,
     healthRegen: 0,
     damage: 10,
-    attackSpeed: 1,
     range: 100,
-    shootingCooldown: 100, // Define shooting cooldown
+    shootingCooldown: 100 / attackSpeed, // Define shooting cooldown
     currentCooldown: 0, // Initialize current cooldown
     healthRegenCooldown: 100,
   };
@@ -397,7 +397,7 @@ function startNewGame() {
   enemiesCurrentCooldown = 0;
 }
 
-let attackSpeedMax = tower.attackSpeed.toFixed(1);
+let attackSpeedMax = attackSpeed.toFixed(1);
 
 // Tower upgrade costs
 let upgradeDamageCost = 5;
@@ -414,7 +414,7 @@ let enemiesCurrentCooldown = 0;
 
 // Define projectile object
 let projectiles = [];
-const projectileSpeed = 5;
+const projectileSpeed = 15;
 const projectileSize = 2;
 // ================================================ LOCAL STORAGE ========================================================
 
@@ -568,6 +568,8 @@ function updateTower() {
       tower.currentCooldown = tower.shootingCooldown; // Reset cooldown
     }
   }
+  console.log(tower.currentCooldown);
+  console.log(tower.shootingCooldown);
 }
 // ================================= PROJECTILES ====================================
 
