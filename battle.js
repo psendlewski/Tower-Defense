@@ -373,8 +373,8 @@ function startNewGame() {
     y: canvas.height / 2,
     radius: 13,
     sides: 6,
-    health: 100,
-    healthMax: 100,
+    health: 1000,
+    healthMax: 1000,
     healthRegen: 0,
     damage: 10,
     range: 100,
@@ -407,7 +407,7 @@ let upgradeHealthRegenCost = 5;
 
 // Enemy properties
 const enemySize = 10;
-const enemySpeed = 1.5;
+const enemySpeed = 1;
 let enemyHealth = 10;
 let enemiesCooldown = 100;
 let enemiesCurrentCooldown = 0;
@@ -568,8 +568,8 @@ function updateTower() {
       tower.currentCooldown = tower.shootingCooldown; // Reset cooldown
     }
   }
-  console.log(tower.currentCooldown);
-  console.log(tower.shootingCooldown);
+  // console.log(tower.currentCooldown);
+  // console.log(tower.shootingCooldown);
 }
 // ================================= PROJECTILES ====================================
 
@@ -721,7 +721,7 @@ function updateEnemies() {
     enemy.y += Math.sin(angle) * enemySpeed;
 
     if (distance(tower, enemy) <= enemySize) {
-      tower.health -= 5;
+      tower.health -= 1;
       enemies.splice(i, 1);
     }
   }
@@ -738,6 +738,23 @@ function updateEnemiesCooldown() {
 // Handle "Start New Game" button click
 startNewGameButton.addEventListener("click", () => {
   startNewGame();
+});
+
+// Upgrade Buttons
+
+// Damage
+document.getElementById("a1").addEventListener("click", () => {
+  console.log("Clicked Upgrade Damage");
+  if (cash >= upgradeDamageCost) {
+    cash -= upgradeDamageCost; // Deduct the upgrade cost
+    tower.damage += 1; // Increase tower damage
+    console.log(
+      `Upgrade successful! New tower damage: ${tower.damage}, Remaining cash: ${cash}`
+    );
+  } else {
+    console.log("Not enough cash for upgrade.");
+  }
+  document.getElementById("damage-amount").textContent = tower.damage;
 });
 
 // Start the game loop
