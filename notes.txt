@@ -1,5 +1,10 @@
 ================================ TO DO LIST =========================
 
+* Praca nad przyciskami upgrades:
+Dodanie event listenerów do podstawowych przycisków
+
+
+
 * dodanie strony production z 10 kopalniami, dodanie smelters oraz crafters
 * dodanie funkcji do każdego materiału i produkcji
 

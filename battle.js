@@ -742,19 +742,30 @@ startNewGameButton.addEventListener("click", () => {
 
 // Upgrade Buttons
 
+// Display current damage and cost
+document.getElementById("damage-amount").textContent = tower.damage.toFixed(1);
+document.getElementById("damage-cost").textContent = `$${upgradeDamageCost}`;
+
 // Damage
 document.getElementById("a1").addEventListener("click", () => {
   console.log("Clicked Upgrade Damage");
-  if (cash >= upgradeDamageCost) {
-    cash -= upgradeDamageCost; // Deduct the upgrade cost
-    tower.damage += 1; // Increase tower damage
-    console.log(
-      `Upgrade successful! New tower damage: ${tower.damage}, Remaining cash: ${cash}`
-    );
-  } else {
-    console.log("Not enough cash for upgrade.");
+  if (newGame) {
+    if (cash >= upgradeDamageCost) {
+      cash -= upgradeDamageCost; // Deduct the upgrade cost
+      cash = parseFloat(cash.toFixed(1));
+      tower.damage = (tower.damage * 1.083).toFixed(1); // Increase tower damage
+      upgradeDamageCost = parseFloat((upgradeDamageCost * 1.23).toFixed(1));
+      console.log(
+        `Upgrade successful! New tower damage: ${tower.damage}, Remaining cash: ${cash}`
+      );
+    } else {
+      console.log("Not enough cash for upgrade.");
+    }
+    document.getElementById("damage-amount").textContent = tower.damage;
+    document.getElementById(
+      "damage-cost"
+    ).textContent = `$${upgradeDamageCost}`;
   }
-  document.getElementById("damage-amount").textContent = tower.damage;
 });
 
 // Start the game loop
